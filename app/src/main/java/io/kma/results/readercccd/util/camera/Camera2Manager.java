@@ -45,9 +45,6 @@ import java.util.concurrent.TimeUnit;
 import io.kma.results.readercccd.feature.common.view.AutoFitTextureView;
 import io.kma.results.readercccd.util.ImageUtil;
 
-//import example.jllarraz.com.passportreader.utils.ImageUtil;
-//import example.jllarraz.com.passportreader.ui.views.AutoFitTextureView;
-
 public class Camera2Manager {
 
     private static final String TAG = Camera2Manager.class.getSimpleName();
