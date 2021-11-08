@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000">
-    <io.kma.results.readercccd.ui.views.AutoFitTextureView
+    <io.kma.results.readercccd.feature.common.view.AutoFitTextureView
         android:id="@+id/texture"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

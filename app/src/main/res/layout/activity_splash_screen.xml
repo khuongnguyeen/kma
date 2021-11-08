@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:lines="2"
-        android:text="Welcome to \n KMA Reader CCCD"
+        android:text="Welcome to Reader \n Citizen Identification Card"
         android:textColor="@color/red_700"
         android:textSize="26dp"
         android:textStyle="bold"

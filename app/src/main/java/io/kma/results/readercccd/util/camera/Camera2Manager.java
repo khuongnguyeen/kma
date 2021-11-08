@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -43,7 +42,7 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import io.kma.results.readercccd.ui.views.AutoFitTextureView;
+import io.kma.results.readercccd.feature.common.view.AutoFitTextureView;
 import io.kma.results.readercccd.util.ImageUtil;
 
 //import example.jllarraz.com.passportreader.utils.ImageUtil;

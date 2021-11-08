@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import org.jmrtd.BACKey;
 
@@ -46,8 +47,6 @@ public class ReadDocActivity extends AppCompatActivity implements INfcReaderTask
     {
         super.onCreate(savedInstanceState);
 
-        System.out.println("ReadDocActivity.onCreate");
-        //setContentView(R.layout.activity_read_document);
         setContentView(R.layout.read_doc);
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null)
@@ -116,10 +115,7 @@ public class ReadDocActivity extends AppCompatActivity implements INfcReaderTask
                 System.out.println("ReadDocAct.onNewIntent contains IsoDep");
 
 
-                ProgressBar progressBar = new ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);
-                LinearLayout layout = findViewById(R.id.readDocLayout);
-                layout.addView(progressBar);
-
+                ProgressBar progressBar = findViewById(R.id.progressBar);
                 InputData inputData = SessionData.getInstance().getInputData();
                 BACKey key = new BACKey( inputData.getPersonalNumber(),inputData.getBirthDate(),inputData.getExpireDate());
                 IsoDep isoDep = IsoDep.get(tag);

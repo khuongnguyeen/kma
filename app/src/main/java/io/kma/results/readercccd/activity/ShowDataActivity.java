@@ -22,6 +22,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import io.kma.results.readercccd.R;
 import io.kma.results.readercccd.model.DocData;
 import io.kma.results.readercccd.model.SessionData;
@@ -41,18 +43,24 @@ public class ShowDataActivity extends AppCompatActivity {
         System.out.println("ShowDataActivity.onResume");
         TextView tvName = findViewById(R.id.tvName);
         TextView tvGender = findViewById(R.id.tvGender);
-        TextView tvLastName = findViewById(R.id.tvLastName);
+        TextView tvNationality = findViewById(R.id.tvNationality);
         TextView tvNumber = findViewById(R.id.tvNumber);
+        TextView tvMrz = findViewById(R.id.tvMrz);
+        TextView tvExpireDate = findViewById(R.id.tvExpireDate);
         TextView tvBirthDate = findViewById(R.id.tvBirthDate);
         ImageView imgViewPhoto = findViewById(R.id.imgVwPhoto);
 
         DocData data= SessionData.getInstance().getDocData();
         if (data!= null) {
-            tvName.setText(data.getSecondaryId());
-            tvLastName.setText(data.getPrimaryId());
+            tvName.setText(data.getPrimaryId() +" " + data.getSecondaryId());
+            tvNationality.setText(data.getNationality());
             tvGender.setText(data.getSex());
             tvNumber.setText(data.getPersonalNumber());
-            tvBirthDate.setText(data.getBirthDate());
+            String[] a =  data.getExpireDate().split("");
+            tvExpireDate.setText(a[4]+a[5]+"/"+a[2]+a[3]+"/"+a[0]+a[1]);
+            tvMrz.setText(data.getMrz());
+            String[] b =  data.getBirthDate().split("");
+            tvBirthDate.setText(b[4]+b[5]+"/"+b[2]+b[3]+"/"+b[0]+b[1]);
             if (data.getPortrait()!=null)
             {
                 imgViewPhoto.setImageDrawable(data.getPortrait());

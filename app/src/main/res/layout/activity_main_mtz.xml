@@ -40,7 +40,7 @@
         android:layout_marginTop="50dp"
         android:hint="Personal number"
         android:inputType="text"
-        android:text="BGW112854"
+        android:text="098007297"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -32,14 +32,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ReaderCCCD">
-        <activity android:name=".feature.SplashScreen">
+        <activity android:name=".activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".feature.MainActivity"/>
+        <activity android:name=".activity.MainActivity"/>
         <meta-data
             android:name="io.sentry.dsn"
             android:value="https://09f3022eb19f4fa7ba332b1f44188ff1@o432234.ingest.sentry.io/5384638"
@@ -69,7 +69,7 @@
         </service>
 
         <activity
-            android:name=".feature.tabs.BottomTabsActivity"
+            android:name=".activity.BottomTabsActivity"
             android:screenOrientation="fullSensor"
             android:configChanges="orientation|screenSize"
             >
@@ -86,7 +86,7 @@
         </activity>
 
         <activity
-            android:name=".feature.tabs.scan.file.ScanBarcodeFromFileActivity"
+            android:name=".activity.ScanBarcodeFromFileActivity"
             android:screenOrientation="fullSensor"
             android:configChanges="orientation|screenSize"
             tools:ignore="AppLinkUrlError"
@@ -107,12 +107,12 @@
         </activity>
 
         <activity
-            android:name=".feature.barcode.BarcodeActivity"
+            android:name=".activity.barcode.BarcodeActivity"
             android:screenOrientation="fullSensor"
             android:configChanges="orientation|screenSize"
             />
         <activity
-            android:name=".feature.barcode.BarcodeImageActivity"
+            android:name=".activity.barcode.BarcodeImageActivity"
             android:screenOrientation="fullSensor"
             android:configChanges="orientation|screenSize"
             />

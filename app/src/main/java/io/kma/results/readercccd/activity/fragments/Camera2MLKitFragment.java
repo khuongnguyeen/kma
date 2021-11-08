@@ -44,7 +44,7 @@ import org.jmrtd.lds.icao.MRZInfo;
 
 import io.kma.results.readercccd.mlkit.OcrMrzDetectorProcessor;
 import io.kma.results.readercccd.task.OcrReaderTask;
-import io.kma.results.readercccd.ui.views.AutoFitTextureView;
+import io.kma.results.readercccd.feature.common.view.AutoFitTextureView;
 import io.kma.results.readercccd.util.camera.Camera2Manager;
 import io.kma.results.readercccd.mlkit.VisionProcessorBase;
 import io.kma.results.readercccd.R;

@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.service.quicksettings.TileService
 import androidx.annotation.RequiresApi
-import io.kma.results.readercccd.feature.tabs.BottomTabsActivity
+import io.kma.results.readercccd.activity.BottomTabsActivity
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 class QuickSettingsTileService : TileService() {

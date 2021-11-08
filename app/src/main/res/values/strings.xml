@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ReaderCCCD</string>
+    <string name="app_name">ReaderCIC</string>
     <!--Shortcuts-->
     <string name="shortcut_scan_from_camera">Scan</string>
     <string name="shortcut_scan_from_file">Scan image</string>

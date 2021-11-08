@@ -111,4 +111,6 @@ dependencies {
     implementation 'com.gemalto.jp2:jp2-android:1.0'
     api 'net.sf.scuba:scuba-sc-android:0.0.18'
 
+    
+
 }

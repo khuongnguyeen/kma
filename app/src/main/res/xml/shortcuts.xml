@@ -10,7 +10,7 @@
         <intent
             android:action="io.kma.results.readercccd.SCAN_FROM_CAMERA"
             android:targetPackage="io.kma.results.readercccd"
-            android:targetClass="io.kma.results.readercccd.feature.tabs.BottomTabsActivity"
+            android:targetClass="io.kma.results.readercccd.activity.BottomTabsActivity"
             />
     </shortcut>
 
@@ -24,7 +24,7 @@
         <intent
             android:action="io.kma.results.readercccd.SCAN_FROM_FILE"
             android:targetPackage="io.kma.results.readercccd"
-            android:targetClass="io.kma.results.readercccd.feature.tabs.scan.file.ScanBarcodeFromFileActivity"
+            android:targetClass="io.kma.results.readercccd.activity.ScanBarcodeFromFileActivity"
             />
     </shortcut>
 
@@ -38,7 +38,7 @@
         <intent
             android:action="io.kma.results.readercccd.CREATE_BARCODE"
             android:targetPackage="io.kma.results.readercccd"
-            android:targetClass="io.kma.results.readercccd.feature.tabs.BottomTabsActivity"
+            android:targetClass="io.kma.results.readercccd.activity.BottomTabsActivity"
             />
     </shortcut>
 
@@ -52,7 +52,7 @@
         <intent
             android:action="io.kma.results.readercccd.HISTORY"
             android:targetPackage="io.kma.results.readercccd"
-            android:targetClass="io.kma.results.readercccd.feature.tabs.BottomTabsActivity"
+            android:targetClass="io.kma.results.readercccd.activity.BottomTabsActivity"
             />
     </shortcut>
 
