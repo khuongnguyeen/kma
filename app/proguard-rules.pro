@@ -1,53 +1,59 @@
+-printmapping mapping.txt
+-verbose
+-dontoptimize
+-dontpreverify
+-dontshrink
+-dontskipnonpubliclibraryclassmembers
+-dontusemixedcaseclassnames
+-keepparameternames
 -renamesourcefileattribute SourceFile
--keepattributes SourceFile,LineNumberTable
+-keepattributes *Annotation*
+-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
 
-# Kotlin
-#https://stackoverflow.com/questions/33547643/how-to-use-kotlin-with-proguard
-#https://medium.com/@AthorNZ/kotlin-metadata-jackson-and-proguard-f64f51e5ed32
--keepclassmembers class **$WhenMappings {
-    <fields>;
-}
--keep class kotlin.Metadata { *; }
--keepclassmembers class kotlin.Metadata {
-    public <methods>;
+-keep class * extends android.app.Activity
+-assumenosideeffects class android.util.Log {
+    public static *** d(...);
+    public static *** v(...);
 }
 
-# Android X
--dontwarn androidx.**
--dontwarn com.google.android.material.**
--keep interface androidx.* { *; }
--keep class androidx.** { *; }
--keep class com.google.android.material.** { *; }
+-keep class com.facebook.** { *; }
+-keep class com.androidquery.** { *; }
+-keep class com.google.** { *; }
+-keep class org.acra.** { *; }
+-keep class org.apache.** { *; }
+-keep class com.mobileapptracker.** { *; }
+-keep class com.nostra13.** { *; }
+-keep class net.simonvt.** { *; }
+-keep class android.support.** { *; }
+-keep class com.nnacres.app.model.** { *; }
+-keep class com.facebook.** { *; }
+-keep class com.astuetz.** { *; }
+-keep class twitter4j.** { *; }
+-keep class com.actionbarsherlock.** { *; }
+-keep class com.dg.libs.** { *; }
+-keep class android.support.v4.** { *; }
+-keep class com.bluetapestudio.templateproject.** { *; }
+-keep class com.yourideatoreality.model.** { *; }
+-keep interface com.yourideatoreality.model.** { *; }
+-keep class com.bluetapestudio.** { *; }
+-keep interface com.bluetapestudio.** { *; }
+# Suppress warnings if you are NOT using IAP:
+-dontwarn com.nnacres.app.**
+-dontwarn com.androidquery.**
+-dontwarn com.google.**
+-dontwarn org.acra.**
+-dontwarn org.apache.**
+-dontwarn com.mobileapptracker.**
+-dontwarn com.nostra13.**
+-dontwarn net.simonvt.**
+-dontwarn android.support.**
+-dontwarn com.facebook.**
+-dontwarn twitter4j.**
+-dontwarn com.astuetz.**
+-dontwarn com.actionbarsherlock.**
+-dontwarn com.dg.libs.**
+-dontwarn  com.bluetapestudio.templateproject.**
 
-# RxJava, RxAndroid (https://gist.github.com/kosiara/487868792fbd3214f9c9)
--keep class rx.schedulers.Schedulers {
-    public static <methods>;
-}
--keep class rx.schedulers.ImmediateScheduler {
-    public <methods>;
-}
--keep class rx.schedulers.TestScheduler {
-    public <methods>;
-}
--keep class rx.schedulers.Schedulers {
-    public static ** test();
-}
--keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
-    long producerIndex;
-    long consumerIndex;
-}
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
-    long producerNode;
-    long consumerNode;
-}
--dontwarn sun.misc.Unsafe
--dontwarn org.reactivestreams.FlowAdapters
--dontwarn org.reactivestreams.**
--dontwarn java.util.concurrent.flow.**
--dontwarn java.util.concurrent.**
-
-### Gson uses generic type information stored in a class file when working with fields. Proguard
-# removes such information by default, so configure it to keep all of it.
 -keepattributes Signature
 
 # For using GSON @Expose annotation
@@ -55,25 +61,25 @@
 
 # Gson specific classes
 -keep class sun.misc.Unsafe { *; }
--keep class com.google.gson.stream.** { *; }
+#-keep class com.google.gson.stream.** { *; }
 
-# Application classes that will be serialized/deserialized over Gson
--keep class com.google.gson.examples.android.model.** { *; }
+# The official support library.
+-keep class android.support.v4.app.** { *; }
+-keep interface android.support.v4.app.** { *; }
 
-# Prevent proguard from stripping interface information from TypeAdapterFactory,
-# JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
--keep class * implements com.google.gson.TypeAdapterFactory
--keep class * implements com.google.gson.JsonSerializer
--keep class * implements com.google.gson.JsonDeserializer
+#  Library JARs.
+#-keep class de.greenrobot.dao.** { *; }
+#-keep interface de.greenrobot.dao.** { *; }
+# Library projects.
+-keep class com.actionbarsherlock.** { *; }
+-keep interface com.actionbarsherlock.** { *; }
+#Keep native
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
 
-# LeakCanary
--keep class org.eclipse.mat.** { *; }
--keep class com.squareup.leakcanary.** { *; }
 
-# Room
--dontwarn androidx.room.paging.**
--keep class * extends androidx.room.RoomDatabase
-
-# VCard Parser
--dontwarn ezvcard.**
--keep,includedescriptorclasses class ezvcard.** { *; }
+-dontwarn okio.**
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+-dontwarn com.squareup.okhttp.**
