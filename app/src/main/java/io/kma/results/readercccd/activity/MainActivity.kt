@@ -69,7 +69,7 @@ class MainActivity:AppCompatActivity() {
         inputData.birthDate = sTxtBirthdate
         inputData.expireDate = sTxtExpDate
         inputData.personalNumber = sTxtNumber
-        SessionData.getInstance().inputData = inputData
+        SessionData.getInstance()?.inputData = inputData
 
         println("MainActivity.onReadButtonClick")
         val intent = Intent(this, ReadDocActivity::class.java)

@@ -32,7 +32,7 @@ class CameraOcrReaderActivity : AppCompatActivity(), CamMLKitFragmentListener
         inputData.birthDate = mrzInfo?.dateOfBirth
         inputData.expireDate = mrzInfo?.dateOfExpiry
         inputData.personalNumber = mrzInfo?.documentNumber
-        SessionData.getInstance().inputData = inputData
+        SessionData.getInstance()?.inputData = inputData
         println("CameraOcrReaderActivity.onPassportRead")
         val intent = Intent(this, ReadDocActivity::class.java)
         startActivity(intent)

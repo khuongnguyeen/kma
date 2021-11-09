@@ -28,12 +28,9 @@ import io.kma.results.readercccd.mlkit.VisionProcessorBase.OcrListener
 import io.kma.results.readercccd.task.OcrReaderTask
 import org.jmrtd.lds.icao.MRZInfo
 
-class CamMLKitFragment  //private OnFragmentInteractionListener mListener;
-    : Fragment() {
+class CamMLKitFragment : Fragment() {
     protected var fotoapparat: Fotoapparat? = null
     protected var cameraView: CameraView? = null
-
-    //private OcrMrzDetectorProcessor frameProcessor;
     var frameProcessor: CustomFrameProcessor? = null
     private var ocrFrameProcessor: OcrMrzDetectorProcessor? = null
 
@@ -54,34 +51,25 @@ class CamMLKitFragment  //private OnFragmentInteractionListener mListener;
     ): View? {
         println("En CamMLKitFragment.onCreateView")
         val view = inflater.inflate(R.layout.fragment_cam_mlkit, container, false)
-
-        //camera_ocr_preview
         cameraView = view.findViewById(R.id.camera_ocr_preview)
         mStatusBar = view.findViewById(R.id.status_view_bottom)
         mStatusRead = view.findViewById(R.id.status_view_top)
         buildCamera(cameraView)
-        // Inflate the layout for this fragment
         return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri?) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
     }
 
     override fun onResume() {
         super.onResume()
-        //MRZUtil.cleanStorage();//[REVIEW]
         ocrFrameProcessor = OcrMrzDetectorProcessor()
-        //camera2Manager.startCamera();
         fotoapparat!!.start()
     }
 
     override fun onPause() {
         fotoapparat!!.stop()
-        //camera2Manager.stopCamera();
         ocrFrameProcessor!!.stop()
         super.onPause()
     }
@@ -97,7 +85,6 @@ class CamMLKitFragment  //private OnFragmentInteractionListener mListener;
     override fun onDetach() {
         camMLKitFragmentListener = null
         super.onDetach()
-        //        mListener = null;
     }
 
     private fun buildCamera(cameraView: CameraView?) {
@@ -113,8 +100,8 @@ class CamMLKitFragment  //private OnFragmentInteractionListener mListener;
                     autoFocus(),
                     fixed()
                 )
-            ) // (optional) use the first focus mode which is supported by device
-            .frameProcessor(frameProcessor) // (optional) receives each frame from preview stream
+            )
+            .frameProcessor(frameProcessor)
             .build()
     }
 
@@ -161,9 +148,6 @@ class CamMLKitFragment  //private OnFragmentInteractionListener mListener;
         }
     }
 
-    /**
-     * Shows OK/Cancel confirmation dialog about camera permission.
-     */
     class ConfirmationDialog : DialogFragment() {
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             val parent = parentFragment
@@ -185,11 +169,6 @@ class CamMLKitFragment  //private OnFragmentInteractionListener mListener;
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////
-    //
-    //        Listener
-    //
-    ////////////////////////////////////////////////////////////////////////////////////////
     interface CamMLKitFragmentListener {
         fun onPassportRead(mrzInfo: MRZInfo?)
         fun onError()
@@ -206,74 +185,52 @@ class CamMLKitFragment  //private OnFragmentInteractionListener mListener;
             if (!isDecoding) {
                 isDecoding = true
                 //Bitmap bitmap= createBitmap(frame);
-                val ocrReaderTask = OcrReaderTask(
-                    context!!.applicationContext,
-                    ocrFrameProcessor,
-                    frame,
-                    object : OcrListener {
-                        override fun onMRZRead(mrzInfo: MRZInfo, timeRequired: Long) {
-                            mHandler.post {
-                                try {
-//                                            mStatusRead.setText(getString(R.string.status_bar_ocr, mrzInfo.getDocumentNumber(), mrzInfo.getDateOfBirth(), mrzInfo.getDateOfExpiry()));
-//                                            mStatusBar.setText(getString(R.string.status_bar_success, timeRequired));
-//                                            mStatusBar.setTextColor(getResources().getColor(R.color.status_text));
-                                    if (camMLKitFragmentListener != null) {
-                                        camMLKitFragmentListener!!.onPassportRead(mrzInfo)
+                ocrFrameProcessor?.let {
+                    OcrReaderTask(
+                        context!!.applicationContext,
+                        it,
+                        frame,
+                        object : OcrListener {
+                            override fun onMRZRead(mrzInfo: MRZInfo, timeRequired: Long) {
+                                mHandler.post {
+                                    try {
+                                        if (camMLKitFragmentListener != null) {
+                                            camMLKitFragmentListener!!.onPassportRead(mrzInfo)
+                                        }
+                                    } catch (e: IllegalStateException) {
                                     }
-                                } catch (e: IllegalStateException) {
-                                    //The fragment is destroyed
                                 }
                             }
-                        }
 
-                        override fun onMRZReadFailure(timeRequired: Long) {
-                            mHandler.post {
-                                try {
-//                                            mStatusBar.setText(getString(R.string.status_bar_failure, timeRequired));
-//                                            mStatusBar.setTextColor(Color.RED);
-//                                            mStatusRead.setText("");
-                                } catch (e: IllegalStateException) {
-                                    //The fragment is destroyed
+                            override fun onMRZReadFailure(timeRequired: Long) {
+                                mHandler.post {
+                                    try {
+                                    } catch (e: IllegalStateException) {
+                                    }
                                 }
+                                isDecoding = false
                             }
-                            isDecoding = false
-                        }
 
-                        override fun onFailure(e: Exception, timeRequired: Long) {
-                            isDecoding = false
-                            e.printStackTrace()
-                            mHandler.post {
-                                if (camMLKitFragmentListener != null) {
-                                    camMLKitFragmentListener!!.onError()
+                            override fun onFailure(e: Exception, timeRequired: Long) {
+                                isDecoding = false
+                                e.printStackTrace()
+                                mHandler.post {
+                                    if (camMLKitFragmentListener != null) {
+                                        camMLKitFragmentListener!!.onError()
+                                    }
                                 }
                             }
-                        }
-                    })
-                ocrReaderTask.execute()
+                        })
+                }?.execute()
             }
         }
-    } //    private Bitmap createBitmap(Frame frame)
-
-    //    {
-    //    }
+    }
     companion object {
         private const val REQUEST_CAMERA_PERMISSION = 1
         private const val FRAGMENT_DIALOG = "CamMLKitFragment"
-
-        // TODO: Rename parameter arguments, choose names that match
-        // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
         private const val ARG_PARAM1 = "param1"
         private const val ARG_PARAM2 = "param2"
 
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CamMLKitFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         fun newInstance(param1: String?, param2: String?): CamMLKitFragment {
             val fragment = CamMLKitFragment()
             val args = Bundle()
