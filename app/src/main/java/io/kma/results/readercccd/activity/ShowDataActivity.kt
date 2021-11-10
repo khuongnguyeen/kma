@@ -1,16 +1,21 @@
 package io.kma.results.readercccd.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import io.kma.results.readercccd.R
 import io.kma.results.readercccd.model.SessionData
+import kotlinx.android.synthetic.main.activity_show_data.*
 
 class ShowDataActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_data)
+        cv_1.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     override fun onResume() {

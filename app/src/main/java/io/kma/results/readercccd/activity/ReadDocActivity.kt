@@ -27,11 +27,6 @@ class ReadDocActivity : AppCompatActivity(), INfcReaderTaskCB {
             Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show()
             return
         }
-        if (nfcAdapter!!.isEnabled) {
-            Toast.makeText(this, "NFC enabled", Toast.LENGTH_LONG).show()
-        } else {
-            Toast.makeText(this, "NFC not available", Toast.LENGTH_LONG).show()
-        }
     }
 
     public override fun onResume() {
@@ -39,22 +34,17 @@ class ReadDocActivity : AppCompatActivity(), INfcReaderTaskCB {
         println("ReadDocActivity.onResume")
         // NFC -> ON
         if (nfcAdapter != null) {
-            Toast.makeText(this, "Searching NFC", Toast.LENGTH_SHORT).show()
             val intent = Intent(this.applicationContext, this.javaClass)
             intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
             val pendingIntent =
                 PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
             val filter = arrayOf(arrayOf("android.nfc.tech.IsoDep"))
             nfcAdapter!!.enableForegroundDispatch(this, pendingIntent, null, filter)
-            println("ReadDocAct.onResume nfcAdapted enabled")
-        } else {
-            Toast.makeText(this, "Null NFC", Toast.LENGTH_SHORT).show()
         }
     }
 
     public override fun onPause() {
         super.onPause()
-        println("ReadDocActivity.onPause")
         if (nfcAdapter != null) {
             nfcAdapter!!.disableForegroundDispatch(this)
         }
@@ -63,13 +53,9 @@ class ReadDocActivity : AppCompatActivity(), INfcReaderTaskCB {
     var progressBar: ProgressBar? = null
     public override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        Toast.makeText(this, "", Toast.LENGTH_SHORT).show()
-        println("ReadIDAct.onNewIntent")
         if (NfcAdapter.ACTION_TECH_DISCOVERED == intent.action) {
             val tag = intent.extras!!.getParcelable<Tag>(NfcAdapter.EXTRA_TAG)
-            println("ReadDocAct.onNewIntent tag created")
             if (Arrays.asList(*tag!!.techList).contains("android.nfc.tech.IsoDep")) {
-                println("ReadDocAct.onNewIntent contains IsoDep")
                 val progressBar = findViewById<ProgressBar>(R.id.progressBar)
                 val inputData = SessionData.getInstance()?.inputData
                 val key =
@@ -83,8 +69,6 @@ class ReadDocActivity : AppCompatActivity(), INfcReaderTaskCB {
     }
 
     override fun onPreExecute() {
-        println("ReadIDActivity: onPreExecute")
-        Toast.makeText(this, "Reading NFC ...", Toast.LENGTH_SHORT).show()
     }
 
     override fun onPostExecute(success: Boolean, result: Exception?) {
@@ -92,13 +76,9 @@ class ReadDocActivity : AppCompatActivity(), INfcReaderTaskCB {
             progressBar!!.visibility = View.GONE
         }
         if (success) {
-            println("ReadIDActivity: onPostExecute success")
-            Toast.makeText(this, "NFC Read OK", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, ShowDataActivity::class.java)
             startActivity(intent)
-        } else {
-            println("ReadIDActivity: onPostExecute NOsuccess")
-            Toast.makeText(this, "NFC Read ERROR", Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 }

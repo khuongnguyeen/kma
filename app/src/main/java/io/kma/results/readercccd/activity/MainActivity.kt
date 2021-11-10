@@ -1,13 +1,19 @@
 package io.kma.results.readercccd.activity
 
 import android.Manifest
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.inputmethod.EditorInfo
+import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import cn.pedant.SweetAlert.SweetAlertDialog
 import io.kma.results.readercccd.R
 import io.kma.results.readercccd.model.InputData
 import io.kma.results.readercccd.model.SessionData
@@ -29,17 +35,69 @@ class MainActivity:AppCompatActivity() {
         cv_2.setOnClickListener {
             qrScreen()
         }
-
         cv_1.setOnClickListener {
-            mtzScreen()
+            val checkedId = radio_group.checkedRadioButtonId
+                if (checkedId == R.id.camera){
+                    ocrScreen()
+                }else{
+                    openDialog()
+                }
+
 
         }
-        cv_3.setOnClickListener {
-            ocrScreen()
 
+    }
+
+    private fun openDialog(){
+        val dialog = Dialog(this)
+        with(dialog){
+            requestWindowFeature(1)
+            setContentView(R.layout.dialog_explain)
+            window!!.setBackgroundDrawable(ColorDrawable(0))
         }
-
-
+        val edTextPersonalNb = (dialog.findViewById(R.id.edTextPersonalNb) as EditText)
+        val edTextBirthdate = (dialog.findViewById(R.id.edTextBirthdate) as EditText)
+        val edTextExpirationDate = (dialog.findViewById(R.id.edTextExpirationDate) as EditText)
+        (dialog.findViewById(R.id.confirm) as Button).setOnClickListener {
+            if (edTextPersonalNb.text.toString()==""||edTextBirthdate.text.toString()==""||edTextExpirationDate.text.toString()==""){
+                SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                    .setConfirmButtonBackgroundColor(getColor(R.color.red_700))
+                    .setContentText("Please enter enough information!")
+                    .show()
+            }else{
+                if(edTextPersonalNb.text.toString().length <9){
+                    SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                        .setConfirmButtonBackgroundColor(getColor(R.color.red_700))
+                        .setContentText("Personal number must be 9 digits!")
+                        .show()
+                }else{
+                    if(edTextBirthdate.text.toString().length <6){
+                        SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                            .setConfirmButtonBackgroundColor(getColor(R.color.red_700))
+                            .setContentText("Birthdate must be 6 digits!")
+                            .show()
+                    }else{
+                        if(edTextExpirationDate.text.toString().length <6){
+                            SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                                .setConfirmButtonBackgroundColor(getColor(R.color.red_700))
+                                .setContentText("ExpirationDate must be 6 digits!")
+                                .show()
+                        }
+                        else{
+                            val inputData = InputData()
+                            inputData.birthDate = edTextBirthdate.text.toString()
+                            inputData.expireDate = edTextExpirationDate.text.toString()
+                            inputData.personalNumber = edTextPersonalNb.text.toString()
+                            SessionData.getInstance()?.inputData = inputData
+                            val intent = Intent(this, ReadDocActivity::class.java)
+                            dialog.dismiss()
+                            startActivity(intent)
+                        }
+                    }
+                }
+            }
+        }
+        dialog.show()
     }
 
     private fun qrScreen() {
@@ -54,39 +112,6 @@ class MainActivity:AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun mtzScreen() {
-        val edTxtNumber = findViewById<EditText>(R.id.edTextPersonalNb)
-        val edTxtBirthdate = findViewById<EditText>(R.id.edTextBirthdate)
-        val edTxtExpdate = findViewById<EditText>(R.id.edTextExpirationDate)
-        val sTxtNumber = edTxtNumber.text.toString()
-        val sTxtBirthdate = edTxtBirthdate.text.toString()
-        val sTxtExpDate = edTxtExpdate.text.toString()
-
-        println("txtNb:$sTxtNumber")
-        println("birthDate:$sTxtBirthdate")
-        println("expDate:$sTxtExpDate")
-        val inputData = InputData()
-        inputData.birthDate = sTxtBirthdate
-        inputData.expireDate = sTxtExpDate
-        inputData.personalNumber = sTxtNumber
-        SessionData.getInstance()?.inputData = inputData
-
-        println("MainActivity.onReadButtonClick")
-        val intent = Intent(this, ReadDocActivity::class.java)
-        startActivity(intent)
-    }
-
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == MY_CAMERA_PERMISSION_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show()
-            } else {
-                Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show()
-            }
-        }
-    }
 
 
 

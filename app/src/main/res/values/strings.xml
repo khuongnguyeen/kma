@@ -385,4 +385,11 @@
     <string name="status_bar_success">OCR Detected - Time required: %2dms</string>
     <string name="status_bar_failure">OCR Read failure - Time required: %1d ms</string>
 
+
+<!--    mina-->
+    <string name="to_read">To read your Citizen Identification Card,follow the next steps:</string>
+    <string name="choose_mrz">Choose MRZ input method:</string>
+
+
+
 </resources>

@@ -26,6 +26,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled true //Thu gọn code, false nếu không dùng
+            useProguard true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled true //Thu gọn code, false nếu không dùng
             useProguard true
@@ -117,6 +123,8 @@ dependencies {
     implementation 'com.gemalto.jp2:jp2-android:1.0'
     api 'net.sf.scuba:scuba-sc-android:0.0.18'
 
-    
+
+    implementation 'com.github.f0ris.sweetalert:library:1.6.2'//Lottie Animation
+    implementation 'com.airbnb.android:lottie:3.4.0'
 
 }
