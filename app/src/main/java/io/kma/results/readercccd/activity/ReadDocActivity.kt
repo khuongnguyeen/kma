@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import io.kma.results.readercccd.R
 import io.kma.results.readercccd.model.SessionData
 import io.kma.results.readercccd.task.NfcReaderTask
@@ -24,6 +25,8 @@ class ReadDocActivity : AppCompatActivity(), INfcReaderTaskCB {
         setContentView(R.layout.read_doc)
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
         if (nfcAdapter == null) {
+            val noNfc = findViewById<ConstraintLayout>(R.id.no_nfc)
+            noNfc.visibility = View.VISIBLE
             Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show()
             return
         }
@@ -55,7 +58,7 @@ class ReadDocActivity : AppCompatActivity(), INfcReaderTaskCB {
         super.onNewIntent(intent)
         if (NfcAdapter.ACTION_TECH_DISCOVERED == intent.action) {
             val tag = intent.extras!!.getParcelable<Tag>(NfcAdapter.EXTRA_TAG)
-            if (Arrays.asList(*tag!!.techList).contains("android.nfc.tech.IsoDep")) {
+            if (listOf(*tag!!.techList).contains("android.nfc.tech.IsoDep")) {
                 val progressBar = findViewById<ProgressBar>(R.id.progressBar)
                 val inputData = SessionData.getInstance()?.inputData
                 val key =

@@ -121,7 +121,8 @@
         <activity android:name=".activity.MtzActivity">
 
         </activity>
-        <activity android:name=".activity.ReadDocActivity" />
+        <activity android:name=".activity.ReadDocActivity" >
+        </activity>
         <activity android:name=".activity.CameraOcrReaderActivity"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize"
