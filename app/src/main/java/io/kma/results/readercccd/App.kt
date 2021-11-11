@@ -2,7 +2,7 @@ package io.kma.results.readercccd
 
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.FirebaseApp
-import io.kma.results.readercccd.di.settings
+import io.kma.results.readercccd.common.settings
 import io.kma.results.readercccd.usecase.Logger
 import io.reactivex.plugins.RxJavaPlugins
 import org.bouncycastle.jce.provider.BouncyCastleProvider

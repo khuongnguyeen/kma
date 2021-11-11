@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="card_margin">10dp</dimen>
+    <dimen name="viewport_icon_height">36dp</dimen>
+    <dimen name="margin_tiny">4dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium_small">12dp</dimen>
+    <dimen name="margin_medium">22dp</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_small">13sp</dimen>
+    <dimen name="text_size_default">14sp</dimen>
+
+    <dimen name="margin_none">0dp</dimen>
+    <dimen name="item_photo_width">112dp</dimen>
+    <dimen name="item_photo_height">112dp</dimen>
+
+    <dimen name="toggle_height">48dp</dimen>
+    <dimen name="toggle_padding">12dp</dimen>
+    <dimen name="tiny_margin">1dp</dimen>
+
+    <dimen name="input_label_padding_bottom">4dp</dimen>
+    <dimen name="input_label_vertical_spacing">8dp</dimen>
+    <dimen name="input_label_horizontal_spacing">4dp</dimen>
     <dimen name="default_margin_extra_small">2dp</dimen>
     <dimen name="default_margin_very_small">4dp</dimen>
     <dimen name="default_margin_small">8dp</dimen>
@@ -21,7 +43,7 @@
 
     <dimen name="button_zoom_size">28dp</dimen>
     <dimen name="zoom_seek_bar_height">100dp</dimen>
-    
+
     <dimen name="icon_button_icon_size">18dp</dimen>
     <dimen name="icon_button_icon_padding">9dp</dimen>
     <dimen name="icon_button_vertical_padding">12dp</dimen>
@@ -33,5 +55,4 @@
     <dimen name="button_corner_radius">4dp</dimen>
 
     <dimen name="icon_edit_barcode_name_size">20dp</dimen>
-
 </resources>

@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toBottomOf="@id/image_view"
         app:layout_constraintStart_toEndOf="@id/image_view"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/color_icon_button_icon_and_text"
+        android:textColor="#512DA8"
         tools:text="Copy"
         style="@style/DefaultTextViewStyle"
         />

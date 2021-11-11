@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="grey_mid">#616365</color>
+
+    <color name="colorTextOnSecondary">#000000</color>
+    <color name="colorTextOnPrimary">#ffffff</color>
+    <color name="colorTextOnTertiary">#413392</color>
+    <color name="grey_2">#1f000000</color>
+    <color name="blue_light">#e6e8ee</color>
+    <color name="toogle_text_color">#2A3764</color>
+
+    <color name="viewfinder_corners">#ffffffff</color> <!-- four corner elements for viewfinder -->
+    <color name="viewfinder_frame">#ffd6d6d6</color> <!-- viewfinder rectangle -->
+    <color name="viewfinder_mask">#60000000</color>  <!-- viewfinder exterior darkened area -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -40,6 +52,7 @@
     <color name="crop_image_view_background_color">@color/white</color>
     <color name="edit_text_text_color">@color/black</color>
     <color name="edit_text_hint_color">@color/gray10</color>
+    <color name="color_icon_button_icon_and_text">@color/colorAccent</color>
     <color name="date_time_picker_dialog_background_color">@color/white</color>
 
     <color name="transparent">#00000000</color>

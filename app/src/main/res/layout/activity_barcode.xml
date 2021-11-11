@@ -40,7 +40,7 @@
                 android:padding="@dimen/default_margin_medium2"
                 android:visibility="gone"
                 >
-                <io.kma.results.readercccd.feature.common.view.SquareImageView
+                <io.kma.results.readercccd.common.view.SquareImageView
                     android:id="@+id/image_view_barcode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -66,17 +66,7 @@
                     android:layout_gravity="center"
                     style="@style/SecondaryTextViewStyle"
                     />
-                <ImageView
-                    android:id="@+id/button_edit_name"
-                    android:layout_width="@dimen/icon_edit_barcode_name_size"
-                    android:layout_height="@dimen/icon_edit_barcode_name_size"
-                    android:layout_marginEnd="@dimen/default_margin"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_edit"
-                    app:tint="@color/toolbar_menu_color"
-                    android:visibility="gone"
 
-                    />
             </LinearLayout>
             <TextView
                 android:id="@+id/text_view_barcode_name"
@@ -115,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin_medium"
                 />
-            <io.kma.results.readercccd.feature.common.view.IconButton
+            <io.kma.results.readercccd.common.view.IconButton
                 android:id="@+id/button_copy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
