@@ -504,5 +504,7 @@
         <string name="choose_mrz">Choose MRZ input method:</string>
 
 
+    <string name="welcome_to_reader">Welcome to Reader \n Citizen Identification Card</string>
+    <string name="experience_the_power">The leading application to read information of Vietnamese citizens\' identity cards</string>
 
     </resources>
