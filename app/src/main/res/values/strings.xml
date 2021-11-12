@@ -14,14 +14,14 @@
 
 
 
-    <string name="nfc_title">Put your phone over your passport and don\'t move it</string>
+    <string name="nfc_title">Put your phone over your Citizen Identification Card and don\'t move it</string>
 
     <string name="label_document_number">Document Number</string>
     <string name="label_document_expiry">Expiration Date</string>
     <string name="label_document_issued">Issuing Date</string>
     <string name="label_document_issuing_state">Issuing State</string>
     <string name="label_document_nationality">Nationality</string>
-    <string name="label_passport">Passport</string>
+    <string name="label_passport">Citizen Identification Card</string>
     <string name="label_not_available">NA</string>
 
     <string name="name">%1s %2s</string>

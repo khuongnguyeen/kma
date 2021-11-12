@@ -86,10 +86,14 @@ class PassportDetailsFragment : androidx.fragment.app.Fragment() {
 
         val personDetails = passport.personDetails
         if (personDetails != null) {
-            val name = personDetails.primaryIdentifier!!.replace("<", "")
-            val surname = personDetails.secondaryIdentifier!!.replace("<", "")
+            val name = personDetails.primaryIdentifier!!.replace("<", " ").trim { it <= ' ' }
+            val surname = personDetails.secondaryIdentifier!!.replace("<", " ").trim { it <= ' ' }
             value_name!!.text = getString(R.string.name, name, surname)
             value_DOB!!.text = personDetails.dateOfBirth
+            val a = personDetails.optionalData1?.split(" ")
+
+            if (a?.size!! > 0)  value_cid!!.text = a[0]
+
             value_gender!!.text = personDetails.gender!!.name
             value_passport_number!!.text = personDetails.documentNumber
             value_expiration_date!!.text = personDetails.dateOfExpiry
@@ -299,7 +303,7 @@ class PassportDetailsFragment : androidx.fragment.app.Fragment() {
         }
 
         imageView!!.setImageResource(resourceIconId)
-        imageView.setColorFilter(ContextCompat.getColor(activity!!, resourceColorId), android.graphics.PorterDuff.Mode.SRC_IN)
+        imageView.setColorFilter(ContextCompat.getColor(requireActivity(), resourceColorId), android.graphics.PorterDuff.Mode.SRC_IN)
     }
 
 
