@@ -1,97 +1,83 @@
 package io.kma.results.readercccd.ui.activities
 
-import android.app.Dialog
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import cn.pedant.SweetAlert.SweetAlertDialog
+import androidx.viewpager.widget.ViewPager
 import io.kma.results.readercccd.R
-import io.kma.results.readercccd.common.IntentData
-import io.kma.results.readercccd.model.InputData
-import io.kma.results.readercccd.model.SessionData
+import io.kma.results.readercccd.ui.ManualSheet
+import io.kma.results.readercccd.ui.SliderAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import net.sf.scuba.data.Gender
-import org.jmrtd.lds.icao.MRZInfo
+import java.util.*
 
 
-class MainActivity:AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
+
+
+    private var currentPage = 0
+    private var numPages = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
-
+        val assets = listOf(
+                R.drawable.new_banner_one,
+                R.drawable.new_banner_one,
+                R.drawable.new_banner_one
+        )
+        createSlider(assets)
         cv_2.setOnClickListener {
+            cv_2.isEnabled = false
             qrScreen()
+            Handler(Looper.myLooper()!!).postDelayed({
+                cv_2.isEnabled = true
+            }, 1000)
         }
         cv_1.setOnClickListener {
+            cv_1.isEnabled = false
             val checkedId = radio_group.checkedRadioButtonId
-                if (checkedId == R.id.camera){
-                    ocrScreen()
-                }else{
-                    openDialog()
-                }
-        }
-
-    }
-
-    private fun openDialog(){
-        val dialog = Dialog(this)
-        with(dialog){
-            requestWindowFeature(1)
-            setContentView(R.layout.dialog_explain)
-            window!!.setBackgroundDrawable(ColorDrawable(0))
-        }
-        val edTextPersonalNb = (dialog.findViewById(R.id.edTextPersonalNb) as EditText)
-        val edTextBirthdate = (dialog.findViewById(R.id.edTextBirthdate) as EditText)
-        val edTextExpirationDate = (dialog.findViewById(R.id.edTextExpirationDate) as EditText)
-        (dialog.findViewById(R.id.confirm) as Button).setOnClickListener {
-            if (edTextPersonalNb.text.toString()==""||edTextBirthdate.text.toString()==""||edTextExpirationDate.text.toString()==""){
-                SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                    .setConfirmButtonBackgroundColor(getColor(R.color.red_700))
-                    .setContentText("Vui lòng nhập đủ thông tin!")
-                    .show()
-            }else{
-                if(edTextPersonalNb.text.toString().length <9){
-                    SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                        .setConfirmButtonBackgroundColor(getColor(R.color.red_700))
-                        .setContentText("Số cá nhân phải có 9 chữ số!")
-                        .show()
-                }else{
-                    if(edTextBirthdate.text.toString().length <6){
-                        SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                            .setConfirmButtonBackgroundColor(getColor(R.color.red_700))
-                            .setContentText("Ngày sinh phải có 6 chữ số!")
-                            .show()
-                    }else{
-                        if(edTextExpirationDate.text.toString().length <6){
-                            SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                                .setConfirmButtonBackgroundColor(getColor(R.color.red_700))
-                                .setContentText("Ngày hết hạn phải có 6 chữ số!")
-                                .show()
-                        }
-                        else{
-                            val inputData = InputData()
-                            inputData.birthDate = edTextBirthdate.text.toString()
-                            inputData.expireDate = edTextExpirationDate.text.toString()
-                            inputData.personalNumber = edTextPersonalNb.text.toString()
-                            SessionData.getInstance()?.inputData = inputData
-                            dialog.dismiss()
-                            val mrzInfo = MRZInfo("P", "ESP", "DUMMY", "DUMMY", edTextPersonalNb.text.toString(), "ESP", edTextBirthdate.text.toString(), Gender.MALE, edTextExpirationDate.text.toString(), "DUMMY")
-                            val intent = Intent(this, NfcActivity::class.java)
-                            intent.putExtra(IntentData.KEY_MRZ_INFO, mrzInfo)
-                            startActivity(intent)
-                        }
-                    }
-                }
+            if (checkedId == R.id.camera) {
+                ocrScreen()
+            } else {
+                ManualSheet().show(supportFragmentManager, "dialog")
             }
+            Handler(Looper.myLooper()!!).postDelayed({
+                cv_1.isEnabled = true
+            }, 1000)
         }
-        dialog.show()
+
     }
+
+    private fun createSlider(string: List<Int>) {
+        vpSlider.adapter = SliderAdapter(this, string)
+        indicator.setViewPager(vpSlider)
+        val density = resources.displayMetrics.density
+        indicator.radius = 5 * density
+        numPages = string.size
+        val update = Runnable {
+            if (currentPage == numPages) {
+                currentPage = 0
+            }
+            vpSlider.setCurrentItem(currentPage++, true)
+        }
+        val swipeTimer = Timer()
+        swipeTimer.schedule(object : TimerTask() {
+            override fun run() {
+                Handler(Looper.getMainLooper()).post(update)
+            }
+        }, 2000, 2000)
+        indicator.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageSelected(position: Int) {
+                currentPage = position
+            }
+
+            override fun onPageScrolled(pos: Int, arg1: Float, arg2: Int) {}
+            override fun onPageScrollStateChanged(pos: Int) {}
+        })
+    }
+
 
     private fun qrScreen() {
         val intent = Intent(this, QRTabsActivity::class.java)
@@ -104,8 +90,6 @@ class MainActivity:AppCompatActivity() {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }
-
-
 
 
 }

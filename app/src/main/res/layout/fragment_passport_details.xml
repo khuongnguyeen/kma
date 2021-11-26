@@ -16,6 +16,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/mau_nen_xam"
         android:orientation="vertical">
 
         <!-- Authentication Information Card -->
@@ -25,8 +26,8 @@
             android:id="@+id/card_view_authentication"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/cardview_default_radius"
-            app:cardElevation="3dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
             app:contentPadding="4dp"
             android:layout_marginTop="@dimen/margin_medium_small"
             android:layout_marginLeft="@dimen/margin_medium"
@@ -303,8 +304,8 @@
             android:id="@+id/card_view_person"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/cardview_default_radius"
-            app:cardElevation="3dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
             app:contentPadding="4dp"
             android:layout_marginTop="@dimen/margin_tiny"
             android:layout_marginLeft="@dimen/margin_medium"
@@ -400,20 +401,18 @@
                                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
                             </TableRow>
                         </TableLayout>
-
                     </androidx.appcompat.widget.LinearLayoutCompat>
                 </TableRow>
             </TableLayout>
         </androidx.cardview.widget.CardView>
-
 
         <!-- Passport Information Card -->
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_documents"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/cardview_default_radius"
-            app:cardElevation="3dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
             app:contentPadding="4dp"
             android:layout_marginTop="@dimen/margin_tiny"
             android:layout_marginLeft="@dimen/margin_medium"
@@ -539,14 +538,13 @@
 
         </androidx.cardview.widget.CardView>
 
-
         <!-- Additional person Information Card -->
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_additional_person_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/cardview_default_radius"
-            app:cardElevation="3dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
             app:contentPadding="4dp"
             android:layout_marginTop="@dimen/margin_tiny"
             android:layout_marginLeft="@dimen/margin_medium"
@@ -828,16 +826,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-
-
         <!-- Additional person Information Card -->
-
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_additional_document_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/cardview_default_radius"
-            app:cardElevation="3dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
             app:contentPadding="4dp"
             android:layout_marginTop="@dimen/margin_tiny"
             android:layout_marginLeft="@dimen/margin_medium"
@@ -1041,20 +1036,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-
-
-
-
-
-
         <!-- Additional person Information Card -->
-
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_document_signing_certificate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/cardview_default_radius"
-            app:cardElevation="3dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
             app:contentPadding="4dp"
             android:layout_marginTop="@dimen/margin_tiny"
             android:layout_marginLeft="@dimen/margin_medium"
@@ -1296,9 +1284,6 @@
 
 
         </androidx.cardview.widget.CardView>
-
-
-
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </FrameLayout>

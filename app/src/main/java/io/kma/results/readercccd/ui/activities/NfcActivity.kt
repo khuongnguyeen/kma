@@ -18,6 +18,7 @@ import io.kma.results.readercccd.ui.fragments.CanCuocDetailsFragment
 import io.kma.results.readercccd.ui.fragments.CanCuocPhotoFragment
 
 import io.kma.results.readercccd.common.IntentData.KEY_MRZ_INFO
+import kotlinx.android.synthetic.main.activity_nfc.*
 
 class NfcActivity : androidx.fragment.app.FragmentActivity(), NfcFragment.NfcFragmentListener, CanCuocDetailsFragment.CanCuocDetailsFragmentListener, CanCuocPhotoFragment.CanCuocPhotoFragmentListener {
 
@@ -57,6 +58,14 @@ class NfcActivity : androidx.fragment.app.FragmentActivity(), NfcFragment.NfcFra
 
     public override fun onResume() {
         super.onResume()
+        toolbar.setNavigationOnClickListener {
+           onBackPressed()
+        }
+        toolbar.title= "NFC"
+    }
+
+    override fun onBackPressed() {
+        finish()
     }
 
     public override fun onPause() {
@@ -111,14 +120,14 @@ class NfcActivity : androidx.fragment.app.FragmentActivity(), NfcFragment.NfcFra
     private fun showFragmentDetails(canCuoc: CanCuoc) {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.container, CanCuocDetailsFragment.newInstance(canCuoc))
-                .addToBackStack(TAG_PASSPORT_DETAILS)
+//                .addToBackStack(TAG_PASSPORT_DETAILS)
                 .commit()
     }
 
     private fun showFragmentPhoto(bitmap: Bitmap) {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.container, CanCuocPhotoFragment.newInstance(bitmap))
-                .addToBackStack(TAG_PASSPORT_PICTURE)
+//                .addToBackStack(TAG_PASSPORT_PICTURE)
                 .commit()
     }
 

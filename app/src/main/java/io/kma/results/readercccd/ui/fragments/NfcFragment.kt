@@ -12,9 +12,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import com.airbnb.lottie.LottieAnimationView
 
 import net.sf.scuba.smartcards.CardServiceException
 import net.sf.scuba.smartcards.ISO7816
@@ -35,6 +35,7 @@ import io.kma.results.readercccd.data.CanCuoc
 import io.kma.results.readercccd.utils.KeyStoreUtils
 import io.kma.results.readercccd.utils.NFCDocumentTag
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.activity_qr.*
 import org.jmrtd.MRTDTrustStore
 
 
@@ -45,7 +46,7 @@ class NfcFragment : androidx.fragment.app.Fragment() {
     private var textViewPassportNumber: TextView? = null
     private var textViewDateOfBirth: TextView? = null
     private var textViewDateOfExpiry: TextView? = null
-    private var progressBar: ProgressBar? = null
+    private var progressBar: LottieAnimationView? = null
     private var mHandler = Handler(Looper.getMainLooper())
     var disposable = CompositeDisposable()
 
@@ -151,7 +152,6 @@ class NfcFragment : androidx.fragment.app.Fragment() {
 
     override fun onResume() {
         super.onResume()
-
         textViewPassportNumber!!.text = getString(R.string.doc_number, mrzInfo!!.documentNumber)
         textViewDateOfBirth!!.text = getString(R.string.doc_dob, mrzInfo!!.dateOfBirth)
         textViewDateOfExpiry!!.text = getString(R.string.doc_expiry, mrzInfo!!.dateOfExpiry)
@@ -182,7 +182,7 @@ class NfcFragment : androidx.fragment.app.Fragment() {
 
     private fun onNFCReadFinish() {
         Log.d(TAG, "onNFCReadFinish")
-        mHandler.post { progressBar!!.visibility = View.GONE }
+        mHandler.post { progressBar!!.visibility = View.INVISIBLE }
     }
 
     private fun onCardException(cardException: Exception?) {

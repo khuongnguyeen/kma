@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,26 +11,16 @@
         android:id="@+id/tb_tool"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/red_700"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vpSlider"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_2sdp"
-            android:background="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
-            app:layout_constraintTop_toTopOf="@+id/circleImageView" />
-
-        <ImageView
-            android:id="@+id/circleImageView"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="0dp"
-            android:src="@drawable/kma"
-            android:padding="@dimen/_8sdp"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,44 +33,44 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.12" />
+        app:layout_constraintGuide_percent="0.3" />
 
-
-    <ImageView
-        android:id="@+id/iv_main"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="@dimen/_2sdp"
-        android:src="@drawable/main"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.54" />
+        android:padding="10dip"
+        android:gravity="center"
+        app:centered="false"
+        app:fillColor="@color/blue_new"
+        app:strokeColor="@color/blue_new"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:snap="false" />
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_main">
+        app:layout_constraintTop_toBottomOf="@+id/indicator">
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_5sdp"
-            android:text="@string/to_read"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat_1"
+            android:text="Để đọc thẻ căn cước công dân của bạn,\nhãy làm theo các bước tiếp theo"
             android:textColor="@color/black"
-
             android:textSize="@dimen/_14sdp"
             app:layout_constraintBottom_toTopOf="@+id/textView6"
             app:layout_constraintEnd_toEndOf="parent"
@@ -90,9 +81,11 @@
             android:id="@+id/textView6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_5sdp"
-            android:text="@string/choose_mrz"
-            android:textColor="@color/red_700"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat_bold_1"
+            android:text="CHỌN PHƯƠNG THỨC NHẬP MTZ"
+            android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/radio_group"
@@ -103,29 +96,62 @@
             android:id="@+id/radio_group"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/cl_1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_margin="@dimen/_5sdp"
+            android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:weightSum="2" >
+            android:weightSum="2"
+            android:layout_marginBottom="@dimen/_20sdp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
             <RadioButton
                 android:id="@+id/camera"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:checked="true"
-                android:buttonTint="@color/red_700"
-                android:layout_height="wrap_content"
-                android:text="Tự động quét"/>
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:background="@drawable/selector_radio_camera"
+                android:button="@android:color/transparent"
+                android:checked="true" />
 
             <RadioButton
                 android:id="@+id/manual_input"
-                android:layout_weight="1"
-                android:buttonTint="@color/red_700"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nhập Thủ Công" />
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:background="@drawable/selector_radio_manual"
+                android:button="@android:color/transparent" />
+
         </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/_20sdp"
+            app:layout_constraintBottom_toTopOf="@+id/cl_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <TextView
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="wrap_content"
+                android:text="Tự động quét"
+                android:fontFamily="@font/montserrat_1"
+                android:gravity="center"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:textColor="@color/black"
+                />
+
+            <TextView
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="wrap_content"
+                android:text="Nhập Thủ công"
+                android:gravity="center"
+                android:fontFamily="@font/montserrat_1"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_1"
@@ -135,41 +161,40 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
+
             <Button
                 android:id="@+id/cv_1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/bg_item_main"
                 android:text="Bắt đầu đọc NFC"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="@font/montserrat_bold_1"
+                android:textSize="@dimen/_13sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cv_2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
             </Button>
 
 
-            <Button
+            <ImageButton
                 android:id="@+id/cv_2"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:text="Quét mã QR"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_margin="@dimen/_20sdp"
+                android:background="@drawable/new_qr"
+                app:layout_constraintBottom_toBottomOf="@+id/cv_1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cv_1">
+                app:layout_constraintTop_toTopOf="@+id/cv_1">
 
 
-            </Button>
+            </ImageButton>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -109,6 +109,7 @@ class BarcodeActivity : BaseActivity() {
 
     private fun handleButtonsClicked() {
         button_copy.setOnClickListener { copyBarcodeTextToClipboard() }
+        button_qr.setOnClickListener { navigateToBarcodeImageActivity() }
     }
 
     private fun copyBarcodeTextToClipboard() {
@@ -121,7 +122,6 @@ class BarcodeActivity : BaseActivity() {
     }
 
     private fun showBarcode() {
-        showBarcodeMenuIfNeeded()
         showBarcodeImageIfNeeded()
         showBarcodeDate()
         showBarcodeFormat()
@@ -129,16 +129,6 @@ class BarcodeActivity : BaseActivity() {
         showBarcodeText()
         showBarcodeCountry()
     }
-
-    private fun showBarcodeMenuIfNeeded() {
-        toolbar.inflateMenu(R.menu.menu_barcode)
-        toolbar.menu.apply {
-            findItem(R.id.item_increase_brightness).isVisible = isCreated
-            findItem(R.id.item_show_barcode_image)?.isVisible = isCreated.not()
-        }
-    }
-
-
 
 
     private fun showBarcodeImageIfNeeded() {

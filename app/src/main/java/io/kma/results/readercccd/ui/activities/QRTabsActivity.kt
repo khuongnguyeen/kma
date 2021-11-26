@@ -20,7 +20,7 @@ class QRTabsActivity : BaseActivity() {
     }
 
     private fun showFragment() {
-        val fragment = ScanBarcodeFromCameraFragment()
+        val fragment = ScanBarcodeFromCameraFragment(this)
         fragment.apply(::replaceFragment)
     }
 

@@ -2,14 +2,15 @@
 
     <style name="Theme.ReaderCCCD" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/red_700</item>
-        <item name="colorPrimaryVariant">@color/red_700</item>
+        <item name="colorPrimary">@color/blue_new</item>
+        <item name="colorPrimaryVariant">@color/blue_new</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
 
+        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
@@ -29,9 +30,9 @@
     </style>
 
 <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/red_700</item>
+        <item name="colorPrimary">@color/blue_new</item>
         <item name="colorPrimaryDark">@color/red</item>
-        <item name="colorAccent">@color/red_700</item>
+        <item name="colorAccent">@color/blue_new</item>
         <item name="android:colorBackground">@color/color_background</item>
         <item name="android:textColor">@color/default_text_color</item>
         <item name="android:textColorSecondary">@color/text_color_secondary</item>
@@ -95,7 +96,7 @@
 
     <style name="DefaultTextViewStyle">
         <item name="android:textSize">@dimen/default_text_size</item>
-        <item name="android:textColor">@color/default_text_color</item>
+        <item name="android:textColor">@color/mau_chu_tren_nen_xam</item>
     </style>
 
     <style name="LargeTextViewStyle">
@@ -104,7 +105,7 @@
     </style>
 
     <style name="AppTheme.ProgressBar">
-        <item name="colorAccent">@color/red_700</item>
+        <item name="colorAccent">@color/blue_new</item>
     </style>
     <style name="SecondaryTextViewStyle">
         <item name="android:textColor">@color/secondary_text_color</item>
@@ -131,7 +132,7 @@
 
     <style name="RadioButtonTheme">
         <item name="colorControlNormal">@color/gray5</item>
-        <item name="colorControlActivated">@color/red_700</item>
+        <item name="colorControlActivated">@color/blue_new</item>
         <item name="colorControlHighlight">@android:color/transparent</item>
     </style>
 
@@ -159,7 +160,7 @@
     </style>
 
     <style name="SwitchTheme" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">@color/red_700</item>
+        <item name="colorAccent">@color/blue_new</item>
         <item name="android:colorForeground">@color/switch_background_color</item>
     </style>
 
@@ -258,6 +259,22 @@
         <item name="android:paddingBottom">@dimen/input_label_padding_bottom</item>
         <item name="android:paddingLeft">@dimen/input_label_horizontal_spacing</item>
         <item name="android:paddingRight">@dimen/input_label_horizontal_spacing</item>
+    </style>
+
+    <style name="CustomBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
+    </style>
+
+    <style name="CustomBottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/CustomShapeAppearanceBottomSheetDialog</item>
+    </style>
+
+    <style name="CustomShapeAppearanceBottomSheetDialog" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
 </resources>

@@ -19,7 +19,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="red_700">#0065cb</color>
+    <color name="blue_new">#0065cb</color>
     <color name="adButtonBorder">#E6F0F0F0</color>
     <color name="blue">#00B1FF</color>
     <color name="black_transparent3">#40000000</color>
@@ -86,6 +86,9 @@
     <color name="colorPrimary">#0065cb</color>
     <color name="colorPrimaryDark">#D32F2F</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="mau_nen_xam">#edeef0</color>
+    <color name="mau_chu_tren_nen_xam">#888b96</color>
+    <color name="mau_chu_xam_tren_nen_trang">#c9cace</color>
 
     <color name="status_text">#ffffffff</color>
 </resources>

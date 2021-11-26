@@ -7,6 +7,12 @@
         <item>Both</item>
     </string-array>
 
+    <integer-array name="img_id_arr">
+        <item>@drawable/new_banner_one</item>
+        <item>@drawable/new_banner_one</item>
+        <item>@drawable/new_banner_one</item>
+    </integer-array>
+
 
     <string name="warning_ocr_install">Installing &amp; Starting OCR</string>
     <string name="warning_error_ocr_install">Error Installing &amp; Starting OCR</string>

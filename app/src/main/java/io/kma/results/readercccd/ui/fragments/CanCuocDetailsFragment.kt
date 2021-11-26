@@ -275,15 +275,15 @@ class CanCuocDetailsFragment : androidx.fragment.app.Fragment() {
         val resourceColorId: Int
         when (verdict) {
             VerificationStatus.Verdict.SUCCEEDED -> {
-                resourceIconId = R.drawable.ic_check_circle_outline
+                resourceIconId = R.drawable.new_check
                 resourceColorId = android.R.color.holo_green_light
             }
             VerificationStatus.Verdict.FAILED -> {
-                resourceIconId = R.drawable.ic_close_circle_outline
+                resourceIconId = R.drawable.new_uncheck
                 resourceColorId = android.R.color.holo_red_light
             }
             VerificationStatus.Verdict.NOT_PRESENT -> {
-                resourceIconId = R.drawable.ic_close_circle_outline
+                resourceIconId = R.drawable.new_uncheck
                 resourceColorId = android.R.color.darker_gray
             }
             VerificationStatus.Verdict.NOT_CHECKED -> {
@@ -291,7 +291,7 @@ class CanCuocDetailsFragment : androidx.fragment.app.Fragment() {
                 resourceColorId = android.R.color.holo_orange_light
             }
             VerificationStatus.Verdict.UNKNOWN -> {
-                resourceIconId = R.drawable.ic_close_circle_outline
+                resourceIconId = R.drawable.new_uncheck
                 resourceColorId = android.R.color.darker_gray
             }
         }

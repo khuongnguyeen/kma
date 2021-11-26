@@ -27,7 +27,7 @@ import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.fragment_scan_barcode_from_camera.*
 import java.util.concurrent.TimeUnit
 
-class ScanBarcodeFromCameraFragment : Fragment(){
+class ScanBarcodeFromCameraFragment(val activity2: AppCompatActivity) : Fragment(){
 
     companion object {
         private val PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
@@ -187,65 +187,18 @@ class ScanBarcodeFromCameraFragment : Fragment(){
 
     private fun handleScannedBarcode(result: Result) {
         if (requireActivity().intent?.action == ZXING_SCAN_INTENT_ACTION) {
-            vibrateIfNeeded()
             finishWithResult(result)
             return
         }
 
-
-
-        vibrateIfNeeded()
-
         val barcode = barcodeParser.parseResult(result)
+        navigateToBarcodeScreen(barcode)
 
-        when {
-
-            else -> navigateToBarcodeScreen(barcode)
-        }
-    }
-
-    private fun handleConfirmedBarcode(barcode: Barcode) {
-        when {
-
-            else -> navigateToBarcodeScreen(barcode)
-        }
-    }
-
-    private fun vibrateIfNeeded() {
-
-    }
-
-
-
-    private fun restartPreviewWithDelay(showMessage: Boolean) {
-        Completable
-            .timer(CONTINUOUS_SCANNING_PREVIEW_DELAY, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                if (showMessage) {
-                    showToast(R.string.fragment_scan_barcode_from_camera_barcode_saved)
-                }
-                restartPreview()
-            }
-            .addTo(disposable)
-    }
-
-    private fun restartPreview() {
-        requireActivity().runOnUiThread {
-            codeScanner.startPreview()
-        }
     }
 
     private fun toggleFlash() {
         image_view_flash.isActivated = image_view_flash.isActivated.not()
         codeScanner.isFlashEnabled = codeScanner.isFlashEnabled.not()
-    }
-
-    private fun showToast(stringId: Int) {
-        toast?.cancel()
-        toast = Toast.makeText(requireActivity(), stringId, Toast.LENGTH_SHORT).apply {
-            show()
-        }
     }
 
     private fun requestPermissions() {
@@ -266,6 +219,7 @@ class ScanBarcodeFromCameraFragment : Fragment(){
 
     private fun navigateToBarcodeScreen(barcode: Barcode) {
         BarcodeActivity.start(requireActivity(), barcode)
+        activity2.finish()
     }
 
     private fun finishWithResult(result: Result) {

@@ -33,6 +33,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/default_margin"
         android:ellipsize="end"
+        android:fontFamily="@font/montserrat_1"
         android:textColor="@color/color_icon_button_icon_and_text"
         tools:text="Copy"
         style="@style/DefaultTextViewStyle"
