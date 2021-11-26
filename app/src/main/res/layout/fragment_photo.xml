@@ -11,7 +11,7 @@
     android:clickable="true"
     android:orientation="vertical">
 
-    <io.kma.results.readercccd.ui.views.TouchImageView
+    <io.kma.results.readercccd.common.view.TouchImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -29,32 +29,6 @@ import java.util.Arrays
 import java.util.Collections
 import java.util.logging.Logger
 
-/**
- * Security provider for JMRTD specific implementations.
- * Main motivation is to make JMRTD less dependent on the BouncyCastle provider.
- * Provides:
- *
- *  * [java.security.cert.CertificateFactory] &quot;CVC&quot;
- * (a factory for [org.jmrtd.cert.CardVerifiableCertificate] instances)
- *
- *  * [java.security.cert.CertStore] &quot;PKD&quot;
- * (LDAP based `CertStore`,
- * where the directory contains CSCA and document signer certificates)
- *
- *  * [java.security.cert.CertStore] &quot;JKS&quot;
- * (`KeyStore` based `CertStore`,
- * where the JKS formatted `KeyStore` contains CSCA certificates)
- *
- *  * [java.security.cert.CertStore] &quot;PKCS12&quot;
- * (`KeyStore` based `CertStore`,
- * where the PKCS#12 formatted `KeyStore` contains CSCA certificates)
- *
- *
- *
- * @author The JMRTD team (info@jmrtd.org)
- *
- * @version $Revision: $
- */
 class JMRTDSecurityProvider private constructor() : Provider("JMRTD", 0.1, "JMRTD Security Provider") {
 
     init {
@@ -65,19 +39,7 @@ class JMRTDSecurityProvider private constructor() : Provider("JMRTD", 0.1, "JMRT
         put("CertStore.PKCS12", "org.jmrtd.cert.KeyStoreCertStoreSpi")
 
         if (BC_PROVIDER != null) {
-            /* Replicate BC algorithms... */
 
-            /* FIXME: this won't work, our provider is not signed! */
-            //			replicateFromProvider("Cipher", "DESede/CBC/NoPadding", getBouncyCastleProvider());
-            //			replicateFromProvider("Cipher", "RSA/ECB/PKCS1Padding", getBouncyCastleProvider());
-            //			replicateFromProvider("Cipher", "RSA/NONE/NoPadding", getBouncyCastleProvider());
-            //			replicateFromProvider("KeyFactory", "RSA", getBouncyCastleProvider());
-            //			replicateFromProvider("KeyFactory", "DH", getBouncyCastleProvider());
-            //			replicateFromProvider("Mac", "ISO9797ALG3MAC", getBouncyCastleProvider());
-            //			replicateFromProvider("Mac", "ISO9797ALG3WITHISO7816-4PADDING", getBouncyCastleProvider());
-            //			replicateFromProvider("SecretKeyFactory", "DESede", getBouncyCastleProvider());
-
-            /* But these work fine. */
             replicateFromProvider("CertificateFactory", "X.509", bouncyCastleProvider!!)
             replicateFromProvider("CertStore", "Collection", bouncyCastleProvider!!)
             //			replicateFromProvider("KeyStore", "JKS", SUN_PROVIDER);
@@ -98,13 +60,6 @@ class JMRTDSecurityProvider private constructor() : Provider("JMRTD", 0.1, "JMRT
             replicateFromProvider("Signature", "SHA224withRSA/ISO9796-2", bouncyCastleProvider!!)
 
             replicateFromProvider("Signature", "SHA256withRSA/PSS", bouncyCastleProvider!!)
-
-
-            /* Testing 0.4.7 -- MO */
-            //			replicateFromProvider("KeyStore", "UBER", getBouncyCastleProvider());
-            //			replicateFromProvider("KeyPairGenerator", "ECDHC", getBouncyCastleProvider());
-            //			replicateFromProvider("KeyPairGenerator", "ECDSA", getBouncyCastleProvider());
-            //			replicateFromProvider("X509StreamParser", "CERTIFICATE", getBouncyCastleProvider());
 
             put("Alg.Alias.Mac.ISO9797Alg3Mac", "ISO9797ALG3MAC")
             put("Alg.Alias.CertificateFactory.X509", "X.509")

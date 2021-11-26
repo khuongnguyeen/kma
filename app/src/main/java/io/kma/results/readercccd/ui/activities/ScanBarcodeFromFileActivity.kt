@@ -13,9 +13,6 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import io.kma.results.readercccd.R
 import io.kma.results.readercccd.extension.applySystemWindowInsets
-import io.kma.results.readercccd.extension.showError
-import io.kma.results.readercccd.model.Barcode
-import io.kma.results.readercccd.usecase.save
 import com.google.zxing.Result
 import com.isseiaoki.simplecropview.CropImageView
 import io.kma.results.readercccd.common.*
@@ -182,7 +179,7 @@ class ScanBarcodeFromFileActivity : BaseActivity() {
     private fun showErrorOrRequestPermissions(error: Throwable) {
         when (error) {
             is SecurityException -> permissionsHelper.requestPermissions(this, PERMISSIONS, PERMISSIONS_REQUEST_CODE)
-            else -> showError(error)
+
         }
     }
 
@@ -196,7 +193,7 @@ class ScanBarcodeFromFileActivity : BaseActivity() {
         crop_image_view
             .cropAsSingle()
             .subscribeOn(Schedulers.io())
-            .subscribe(::scanCroppedImage, ::showError)
+            .subscribe(::scanCroppedImage)
             .addTo(scanDisposable)
     }
 
@@ -216,27 +213,10 @@ class ScanBarcodeFromFileActivity : BaseActivity() {
     }
 
     private fun saveScanResult() {
-        val barcode = lastScanResult?.let(barcodeParser::parseResult) ?: return
-        if (settings.saveScannedBarcodesToHistory.not()) {
-            navigateToBarcodeScreen(barcode)
-            return
-        }
+
 
         showLoading(true)
 
-        barcodeDatabase.save(barcode, settings.doNotSaveDuplicates)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { id ->
-                    navigateToBarcodeScreen(barcode.copy(id = id))
-                },
-                { error ->
-                    showLoading(false)
-                    showError(error)
-                }
-            )
-            .addTo(disposable)
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -248,8 +228,5 @@ class ScanBarcodeFromFileActivity : BaseActivity() {
         button_scan.isEnabled = isEnabled
     }
 
-    private fun navigateToBarcodeScreen(barcode: Barcode) {
-        BarcodeActivity.start(this, barcode)
-        finish()
-    }
+
 }

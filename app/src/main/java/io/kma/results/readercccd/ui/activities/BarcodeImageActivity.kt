@@ -9,10 +9,9 @@ import io.kma.results.readercccd.extension.applySystemWindowInsets
 import io.kma.results.readercccd.extension.toStringId
 import io.kma.results.readercccd.extension.unsafeLazy
 import io.kma.results.readercccd.common.barcodeImageGenerator
-import io.kma.results.readercccd.common.settings
 import io.kma.results.readercccd.model.Barcode
 import io.kma.results.readercccd.usecase.Logger
-import kotlinx.android.synthetic.main.activity_barcode_image.*
+import kotlinx.android.synthetic.main.activity_qr_image.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,7 +35,7 @@ class BarcodeImageActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_barcode_image)
+        setContentView(R.layout.activity_qr_image)
         supportEdgeToEdge()
         saveOriginalBrightness()
         handleToolbarBackPressed()
@@ -94,14 +93,9 @@ class BarcodeImageActivity : BaseActivity() {
 
     private fun showBarcodeImage() {
         try {
-            val bitmap = barcodeImageGenerator.generateBitmap(barcode, 2000, 2000, 0, settings.barcodeContentColor, settings.barcodeBackgroundColor)
+            val bitmap = barcodeImageGenerator.generateBitmap(barcode, 2000, 2000, 0)
             image_view_barcode.setImageBitmap(bitmap)
-            image_view_barcode.setBackgroundColor(settings.barcodeBackgroundColor)
-            layout_barcode_image_background.setBackgroundColor(settings.barcodeBackgroundColor)
 
-            if (settings.isDarkTheme.not() || settings.areBarcodeColorsInversed) {
-                layout_barcode_image_background.setPadding(0, 0, 0, 0)
-            }
         } catch (ex: Exception) {
             Logger.log(ex)
             image_view_barcode.isVisible = false

@@ -30,7 +30,7 @@ class NFCDocumentTag {
             var ps: PassportService? = null
             try {
                 val nfc = IsoDep.get(tag)
-                nfc.timeout = 5 * 1000 //5 seconds timeout
+                nfc.timeout = 5 * 1000
                 val cs = CardService.getInstance(nfc)
                 ps = PassportService(cs, 256, 224, false, true)
                 ps.open()
@@ -38,16 +38,10 @@ class NFCDocumentTag {
                 val canCuocNFC = CanCuocNFC(ps, mrtdTrustStore, mrzInfo)
                 val verifySecurity = canCuocNFC.verifySecurity()
                 val features = canCuocNFC.features
-
                 canCuoc = CanCuoc()
-
                 canCuoc.featureStatus = canCuocNFC.features
                 canCuoc.verificationStatus = canCuocNFC.verificationStatus
-
-
                 canCuoc.sodFile = canCuocNFC.sodFile
-
-
                 //Basic Information
                 if (canCuocNFC.dg1File != null) {
                     val mrzInfo = (canCuocNFC.dg1File as DG1File).mrzInfo
@@ -65,12 +59,11 @@ class NFCDocumentTag {
                     personDetails.gender = mrzInfo.gender
                     canCuoc.personDetails = personDetails
                 }
-
                 //Picture
                 if (canCuocNFC.dg2File != null) {
                     //Get the picture
                     try {
-                        val faceImage = CanCuocNfcUtils.retrieveFaceImage(context, canCuocNFC.dg2File!!)
+                        val faceImage = CanCuocNfcUtils.retrieveFaceImage(canCuocNFC.dg2File!!)
                         canCuoc.face = faceImage
                     } catch (e: Exception) {
                         //Don't do anything
@@ -78,8 +71,6 @@ class NFCDocumentTag {
                     }
 
                 }
-
-
                 //Portrait
                 //Get the picture
                 if (canCuocNFC.dg5File != null) {
@@ -93,7 +84,6 @@ class NFCDocumentTag {
                     }
 
                 }
-
 
                 val dg11 = canCuocNFC.dg11File
                 if (dg11 != null) {

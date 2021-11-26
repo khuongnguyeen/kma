@@ -338,7 +338,7 @@
                             android:layout_height="@dimen/item_photo_height"
                             android:contentDescription="Vehicle Owner Details"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_person"
+                            android:src="@mipmap/ic_launcher"
                             android:layout_marginEnd="@dimen/margin_medium"
                             />
 

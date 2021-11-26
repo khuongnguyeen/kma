@@ -10,19 +10,10 @@ import androidx.fragment.app.Fragment
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.Result
 import io.kma.results.readercccd.R
-import io.kma.results.readercccd.common.dialog.ErrorDialogFragment
 import io.kma.results.readercccd.model.Barcode
 import java.text.DateFormat
 import java.util.*
 
-fun AppCompatActivity.showError(error: Throwable?) {
-    val errorDialog =
-            ErrorDialogFragment.newInstance(
-                    this,
-                    error
-            )
-    errorDialog.show(supportFragmentManager, "")
-}
 
 fun BarcodeFormat.toStringId(): Int {
     return when (this) {
@@ -48,12 +39,6 @@ fun Boolean?.orFalse(): Boolean {
     return this ?: false
 }
 
-val Context.vibrator: Vibrator?
-    get() = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
-
-val Context.wifiManager: WifiManager?
-    get() = applicationContext.getSystemService(Context.WIFI_SERVICE) as? WifiManager
-
 val Context.currentLocale: Locale?
     get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         resources.configuration.locales.get(0)
@@ -62,64 +47,10 @@ val Context.currentLocale: Locale?
     }
 
 
-fun DateFormat.parseOrNull(date: String?): Date? {
-    return try {
-        parse(date.orEmpty())
-    } catch (ex: Exception) {
-        null
-    }
-}
-
-fun List<DateFormat>.parseOrNull(date: String?): Date? {
-    forEach { dateParser ->
-        val parsedDate = dateParser.parseOrNull(date)
-        if (parsedDate != null) {
-            return parsedDate
-        }
-    }
-    return null
-}
-
-fun DateFormat.formatOrNull(time: Long?): String? {
-    return try {
-        format(Date(time!!))
-    } catch (ex: Exception) {
-        null
-    }
-}
-
-
-fun Fragment.showError(error: Throwable?) {
-    val errorDialog = ErrorDialogFragment.newInstance(requireContext(), error)
-    errorDialog.show(childFragmentManager, "")
-}
-
 fun Int?.orZero(): Int {
     return this ?: 0
 }
 
-fun Long?.orZero(): Long {
-    return this ?: 0L
-}
-
 fun <T> unsafeLazy(initializer: () -> T): Lazy<T> = lazy(LazyThreadSafetyMode.NONE, initializer)
 
-fun Result.equalTo(barcode: Barcode?): Boolean {
-    return barcodeFormat == barcode?.format && text == barcode?.text
-}
 
-fun StringBuilder.appendIfNotNullOrBlank(prefix: String = "", value: String?, suffix: String = ""): StringBuilder {
-    if (value.isNullOrBlank().not()) {
-        append(prefix)
-        append(value)
-        append(suffix)
-    }
-    return this
-}
-
-fun Uri.Builder.appendQueryParameterIfNotNullOrBlank(key: String, value: String?): Uri.Builder {
-    if (value.isNullOrBlank().not()) {
-        appendQueryParameter(key, value)
-    }
-    return this
-}

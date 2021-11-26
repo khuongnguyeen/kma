@@ -53,14 +53,14 @@ object CanCuocNfcUtils {
 
 
     @Throws(IOException::class)
-    fun retrieveFaceImage(context: Context, dg2File: DG2File): Bitmap {
+    fun retrieveFaceImage(dg2File: DG2File): Bitmap {
         val allFaceImageInfos = ArrayList<FaceImageInfo>()
         val faceInfos = dg2File.faceInfos
         for (faceInfo in faceInfos) {
             allFaceImageInfos.addAll(faceInfo.faceImageInfos)
         }
 
-        if (!allFaceImageInfos.isEmpty()) {
+        if (allFaceImageInfos.isNotEmpty()) {
             val faceImageInfo = allFaceImageInfos.iterator().next()
             return toBitmap(faceImageInfo.imageLength, faceImageInfo.imageInputStream, faceImageInfo.mimeType)
         }
@@ -70,7 +70,7 @@ object CanCuocNfcUtils {
     @Throws(IOException::class)
     fun retrievePortraitImage(context: Context, dg5File: DG5File): Bitmap {
         val faceInfos = dg5File.images
-        if (!faceInfos.isEmpty()) {
+        if (faceInfos.isNotEmpty()) {
             val faceImageInfo = faceInfos.iterator().next()
             return toBitmap(faceImageInfo.imageLength, faceImageInfo.imageInputStream, faceImageInfo.mimeType)
         }
@@ -80,7 +80,7 @@ object CanCuocNfcUtils {
     @Throws(IOException::class)
     fun retrieveSignatureImage(context: Context, dg7File: DG7File): Bitmap {
         val displayedImageInfos = dg7File.images
-        if (!displayedImageInfos.isEmpty()) {
+        if (displayedImageInfos.isNotEmpty()) {
             val displayedImageInfo = displayedImageInfos.iterator().next()
             return toBitmap(displayedImageInfo.imageLength, displayedImageInfo.imageInputStream, displayedImageInfo.mimeType)
         }

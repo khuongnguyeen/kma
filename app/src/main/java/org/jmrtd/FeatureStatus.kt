@@ -3,13 +3,6 @@ package org.jmrtd
 import android.os.Parcel
 import android.os.Parcelable
 
-/**
- * Security features of this identity document.
- *
- * @author The JMRTD team (info@jmrtd.org)
- *
- * @version $Revision: 1559 $
- */
 class FeatureStatus : Parcelable {
 
     private var hasSAC: Verdict? = null
@@ -18,18 +11,10 @@ class FeatureStatus : Parcelable {
     private var hasEAC: Verdict? = null
     private var hasCA: Verdict? = null
 
-    /**
-     * Outcome of a feature presence check.
-     *
-     * @author The JMRTD team (info@jmrtd.org)
-     *
-     * @version $Revision: 1559 $
-     */
     enum class Verdict {
-        UNKNOWN, /* Presence unknown */
-        PRESENT, /* Present */
+        UNKNOWN,
+        PRESENT,
         NOT_PRESENT
-        /* Not present */
     }
 
     constructor() {

@@ -3,7 +3,6 @@ package io.kma.results.readercccd.ui.fragments
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +14,7 @@ import androidx.fragment.app.Fragment
 import com.budiyev.android.codescanner.*
 import io.kma.results.readercccd.R
 import io.kma.results.readercccd.extension.*
-import io.kma.results.readercccd.common.dialog.ConfirmBarcodeDialogFragment
 import io.kma.results.readercccd.model.Barcode
-import io.kma.results.readercccd.usecase.SupportedBarcodeFormats
-import io.kma.results.readercccd.usecase.save
 import com.google.zxing.Result
 import com.google.zxing.ResultMetadataType
 import io.kma.results.readercccd.common.*
@@ -28,11 +24,10 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_scan_barcode_from_camera.*
 import java.util.concurrent.TimeUnit
 
-class ScanBarcodeFromCameraFragment : Fragment(), ConfirmBarcodeDialogFragment.Listener {
+class ScanBarcodeFromCameraFragment : Fragment(){
 
     companion object {
         private val PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
@@ -81,14 +76,6 @@ class ScanBarcodeFromCameraFragment : Fragment(), ConfirmBarcodeDialogFragment.L
         }
     }
 
-    override fun onBarcodeConfirmed(barcode: Barcode) {
-        handleConfirmedBarcode(barcode)
-    }
-
-    override fun onBarcodeDeclined() {
-        restartPreview()
-    }
-
     override fun onPause() {
         codeScanner.releaseResources()
         super.onPause()
@@ -106,21 +93,12 @@ class ScanBarcodeFromCameraFragment : Fragment(), ConfirmBarcodeDialogFragment.L
     }
 
     private fun setDarkStatusBar() {
-
-        if (settings.isDarkTheme) {
-            return
-        }
-
         requireActivity().window.decorView.apply {
             systemUiVisibility = systemUiVisibility xor View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
     }
 
     private fun setLightStatusBar() {
-
-        if (settings.isDarkTheme) {
-            return
-        }
 
         requireActivity().window.decorView.apply {
             systemUiVisibility = systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
@@ -129,28 +107,19 @@ class ScanBarcodeFromCameraFragment : Fragment(), ConfirmBarcodeDialogFragment.L
 
     private fun initScanner() {
         codeScanner = CodeScanner(requireActivity(), scanner_view).apply {
-            camera = if (settings.isBackCamera) {
-                CodeScanner.CAMERA_BACK
-            } else {
-                CodeScanner.CAMERA_FRONT
-            }
-            autoFocusMode = if (settings.simpleAutoFocus) {
-                AutoFocusMode.SAFE
-            } else {
-                AutoFocusMode.CONTINUOUS
-            }
-            formats = SupportedBarcodeFormats.FORMATS.filter(settings::isFormatSelected)
+
+            CodeScanner.CAMERA_BACK
+
+
             scanMode = ScanMode.SINGLE
             isAutoFocusEnabled = true
-            isFlashEnabled = settings.flash
             isTouchFocusEnabled = false
             decodeCallback = DecodeCallback(::handleScannedBarcode)
-            errorCallback = ErrorCallback(::showError)
         }
     }
 
     private fun initZoomSeekBar() {
-        scannerCameraHelper.getCameraParameters(settings.isBackCamera)?.apply {
+        scannerCameraHelper.getCameraParameters(true)?.apply {
             this@ScanBarcodeFromCameraFragment.maxZoom = maxZoom
             seek_bar_zoom.max = maxZoom
             seek_bar_zoom.progress = zoom
@@ -161,7 +130,6 @@ class ScanBarcodeFromCameraFragment : Fragment(), ConfirmBarcodeDialogFragment.L
         layout_flash_container.setOnClickListener {
             toggleFlash()
         }
-        image_view_flash.isActivated = settings.flash
     }
 
     private fun handleScanFromFileClicked() {
@@ -224,60 +192,30 @@ class ScanBarcodeFromCameraFragment : Fragment(), ConfirmBarcodeDialogFragment.L
             return
         }
 
-        if (settings.continuousScanning && result.equalTo(lastResult)) {
-            restartPreviewWithDelay(false)
-            return
-        }
+
 
         vibrateIfNeeded()
 
         val barcode = barcodeParser.parseResult(result)
 
         when {
-            settings.confirmScansManually -> showScanConfirmationDialog(barcode)
-            settings.saveScannedBarcodesToHistory || settings.continuousScanning -> saveScannedBarcode(barcode)
+
             else -> navigateToBarcodeScreen(barcode)
         }
     }
 
     private fun handleConfirmedBarcode(barcode: Barcode) {
         when {
-            settings.saveScannedBarcodesToHistory || settings.continuousScanning -> saveScannedBarcode(barcode)
+
             else -> navigateToBarcodeScreen(barcode)
         }
     }
 
     private fun vibrateIfNeeded() {
-        if (settings.vibrate) {
-            requireActivity().apply {
-                runOnUiThread {
-                    applicationContext.vibrator?.vibrateOnce(vibrationPattern)
-                }
-            }
-        }
+
     }
 
-    private fun showScanConfirmationDialog(barcode: Barcode) {
-        val dialog = ConfirmBarcodeDialogFragment.newInstance(barcode)
-        dialog.show(childFragmentManager, "")
-    }
 
-    private fun saveScannedBarcode(barcode: Barcode) {
-        barcodeDatabase.save(barcode, settings.doNotSaveDuplicates)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { id ->
-                    lastResult = barcode
-                    when (settings.continuousScanning) {
-                        true -> restartPreviewWithDelay(true)
-                        else -> navigateToBarcodeScreen(barcode.copy(id = id))
-                    }
-                },
-                ::showError
-            )
-            .addTo(disposable)
-    }
 
     private fun restartPreviewWithDelay(showMessage: Boolean) {
         Completable

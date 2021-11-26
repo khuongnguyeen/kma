@@ -1,4 +1,4 @@
-package io.kma.results.readercccd.ui.views
+package io.kma.results.readercccd.common.view
 
 import android.annotation.TargetApi
 import android.content.Context
@@ -29,23 +29,10 @@ import android.widget.Scroller
 
 class TouchImageView : androidx.appcompat.widget.AppCompatImageView {
 
-    //
-    // Scale of image ranges from minScale to maxScale, where minScale == 1
-    // when the image is stretched to fit view.
-    //
-    /**
-     * Get the current zoom. This is the zoom relative to the initial
-     * scale, not the original resource.
-     * @return current zoom multiplier.
-     */
+
     var currentZoom: Float = 0.toFloat()
         private set
 
-    //
-    // Matrix applied to image. MSCALE_X and MSCALE_Y should always be equal.
-    // MTRANS_X and MTRANS_Y are the other values used. prevMatrix is the matrixInternal
-    // saved prior to the screen rotating.
-    //
     private var matrixInternal: Matrix? = null
     private var prevMatrix: Matrix? = null
     private var state: State? = null
@@ -700,7 +687,7 @@ class TouchImageView : androidx.appcompat.widget.AppCompatImageView {
                 fling!!.cancelFling()
             }
             fling = Fling(velocityX.toInt(), velocityY.toInt())
-            compatPostOnAnimation(fling as TouchImageView.Fling)
+            compatPostOnAnimation(fling as Fling)
             return super.onFling(e1, e2, velocityX, velocityY)
         }
 

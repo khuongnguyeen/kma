@@ -46,26 +46,18 @@ class NfcFragment : androidx.fragment.app.Fragment() {
     private var textViewDateOfBirth: TextView? = null
     private var textViewDateOfExpiry: TextView? = null
     private var progressBar: ProgressBar? = null
-
-    internal var mHandler = Handler(Looper.getMainLooper())
+    private var mHandler = Handler(Looper.getMainLooper())
     var disposable = CompositeDisposable()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater.inflate(R.layout.fragment_nfc, container, false)!!
 
-        val inflatedView = inflater.inflate(R.layout.fragment_nfc, container, false)
-
-        return inflatedView
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val arguments = arguments
         if (arguments!!.containsKey(IntentData.KEY_MRZ_INFO)) {
             mrzInfo = arguments.getSerializable(IntentData.KEY_MRZ_INFO) as MRZInfo
         }
-
         textViewPassportNumber = view.findViewById(R.id.value_passport_number)
         textViewDateOfBirth = view.findViewById(R.id.value_DOB)
         textViewDateOfExpiry = view.findViewById(R.id.value_expiration_date)
@@ -78,7 +70,7 @@ class NfcFragment : androidx.fragment.app.Fragment() {
         }
         val tag = intent.getParcelableExtra<Tag>(NfcAdapter.EXTRA_TAG) ?: return
 
-        val folder = context!!.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)!!
+        val folder = requireContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)!!
         val keyStore = KeyStoreUtils().readKeystoreFromFile(folder)
 
         val mrtdTrustStore = MRTDTrustStore()
@@ -89,7 +81,7 @@ class NfcFragment : androidx.fragment.app.Fragment() {
         }
 
 
-        val subscribe = NFCDocumentTag().handleTag(context!!, tag, mrzInfo!!, mrtdTrustStore, object : NFCDocumentTag.CanCuocCallback {
+        val subscribe = NFCDocumentTag().handleTag(requireContext(), tag, mrzInfo!!, mrtdTrustStore, object : NFCDocumentTag.CanCuocCallback {
 
             override fun onCanCuocReadStart() {
                 onNFCSReadStart()
@@ -139,7 +131,6 @@ class NfcFragment : androidx.fragment.app.Fragment() {
                 this@NfcFragment.onCardException(exception)
             }
         })
-
         disposable.add(subscribe)
 
     }
@@ -164,7 +155,6 @@ class NfcFragment : androidx.fragment.app.Fragment() {
         textViewPassportNumber!!.text = getString(R.string.doc_number, mrzInfo!!.documentNumber)
         textViewDateOfBirth!!.text = getString(R.string.doc_dob, mrzInfo!!.dateOfBirth)
         textViewDateOfExpiry!!.text = getString(R.string.doc_expiry, mrzInfo!!.dateOfExpiry)
-
         if (nfcFragmentListener != null) {
             nfcFragmentListener!!.onEnableNfc()
         }
@@ -178,24 +168,24 @@ class NfcFragment : androidx.fragment.app.Fragment() {
     }
 
     override fun onDestroyView() {
-        if (!disposable.isDisposed()) {
+        if (!disposable.isDisposed) {
             disposable.dispose();
         }
         super.onDestroyView()
     }
 
-    protected fun onNFCSReadStart() {
+    private fun onNFCSReadStart() {
         Log.d(TAG, "onNFCSReadStart")
         mHandler.post { progressBar!!.visibility = View.VISIBLE }
 
     }
 
-    protected fun onNFCReadFinish() {
+    private fun onNFCReadFinish() {
         Log.d(TAG, "onNFCReadFinish")
         mHandler.post { progressBar!!.visibility = View.GONE }
     }
 
-    protected fun onCardException(cardException: Exception?) {
+    private fun onCardException(cardException: Exception?) {
         mHandler.post {
             if (nfcFragmentListener != null) {
                 nfcFragmentListener!!.onCardException(cardException)
@@ -203,7 +193,7 @@ class NfcFragment : androidx.fragment.app.Fragment() {
         }
     }
 
-    protected fun onPassportRead(canCuoc: CanCuoc?) {
+    private fun onPassportRead(canCuoc: CanCuoc?) {
         mHandler.post {
             if (nfcFragmentListener != null) {
                 nfcFragmentListener!!.onPassportRead(canCuoc)
