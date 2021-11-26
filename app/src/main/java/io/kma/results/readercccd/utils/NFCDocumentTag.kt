@@ -7,7 +7,7 @@ import android.nfc.tech.IsoDep
 import android.util.Log
 import io.kma.results.readercccd.data.AdditionalDocumentDetails
 import io.kma.results.readercccd.data.AdditionalPersonDetails
-import io.kma.results.readercccd.data.Passport
+import io.kma.results.readercccd.data.CanCuoc
 import io.kma.results.readercccd.data.PersonDetails
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,9 +22,9 @@ import java.security.Security
 
 class NFCDocumentTag {
 
-    fun handleTag(context: Context, tag: Tag, mrzInfo: MRZInfo, mrtdTrustStore: MRTDTrustStore, passportCallback: PassportCallback):Disposable{
+    fun handleTag(context: Context, tag: Tag, mrzInfo: MRZInfo, mrtdTrustStore: MRTDTrustStore, canCuocCallback: CanCuocCallback):Disposable{
         return  Single.fromCallable {
-            var passport: Passport? = null
+            var canCuoc: CanCuoc? = null
             var cardServiceException: Exception? = null
 
             var ps: PassportService? = null
@@ -35,22 +35,22 @@ class NFCDocumentTag {
                 ps = PassportService(cs, 256, 224, false, true)
                 ps.open()
 
-                val passportNFC = PassportNFC(ps, mrtdTrustStore, mrzInfo)
-                val verifySecurity = passportNFC.verifySecurity()
-                val features = passportNFC.features
+                val canCuocNFC = CanCuocNFC(ps, mrtdTrustStore, mrzInfo)
+                val verifySecurity = canCuocNFC.verifySecurity()
+                val features = canCuocNFC.features
 
-                passport = Passport()
+                canCuoc = CanCuoc()
 
-                passport.featureStatus = passportNFC.features
-                passport.verificationStatus = passportNFC.verificationStatus
+                canCuoc.featureStatus = canCuocNFC.features
+                canCuoc.verificationStatus = canCuocNFC.verificationStatus
 
 
-                passport.sodFile = passportNFC.sodFile
+                canCuoc.sodFile = canCuocNFC.sodFile
 
 
                 //Basic Information
-                if (passportNFC.dg1File != null) {
-                    val mrzInfo = (passportNFC.dg1File as DG1File).mrzInfo
+                if (canCuocNFC.dg1File != null) {
+                    val mrzInfo = (canCuocNFC.dg1File as DG1File).mrzInfo
                     val personDetails = PersonDetails()
                     personDetails.dateOfBirth = mrzInfo.dateOfBirth
                     personDetails.dateOfExpiry = mrzInfo.dateOfExpiry
@@ -63,15 +63,15 @@ class NFCDocumentTag {
                     personDetails.secondaryIdentifier = mrzInfo.secondaryIdentifier
                     personDetails.nationality = mrzInfo.nationality
                     personDetails.gender = mrzInfo.gender
-                    passport.personDetails = personDetails
+                    canCuoc.personDetails = personDetails
                 }
 
                 //Picture
-                if (passportNFC.dg2File != null) {
+                if (canCuocNFC.dg2File != null) {
                     //Get the picture
                     try {
-                        val faceImage = PassportNfcUtils.retrieveFaceImage(context, passportNFC.dg2File!!)
-                        passport.face = faceImage
+                        val faceImage = CanCuocNfcUtils.retrieveFaceImage(context, canCuocNFC.dg2File!!)
+                        canCuoc.face = faceImage
                     } catch (e: Exception) {
                         //Don't do anything
                         e.printStackTrace()
@@ -82,11 +82,11 @@ class NFCDocumentTag {
 
                 //Portrait
                 //Get the picture
-                if (passportNFC.dg5File != null) {
+                if (canCuocNFC.dg5File != null) {
                     //Get the picture
                     try {
-                        val faceImage = PassportNfcUtils.retrievePortraitImage(context, passportNFC.dg5File!!)
-                        passport.portrait = faceImage
+                        val faceImage = CanCuocNfcUtils.retrievePortraitImage(context, canCuocNFC.dg5File!!)
+                        canCuoc.portrait = faceImage
                     } catch (e: Exception) {
                         //Don't do anything
                         e.printStackTrace()
@@ -95,7 +95,7 @@ class NFCDocumentTag {
                 }
 
 
-                val dg11 = passportNFC.dg11File
+                val dg11 = canCuocNFC.dg11File
                 if (dg11 != null) {
 
                     val additionalPersonDetails = AdditionalPersonDetails()
@@ -116,42 +116,32 @@ class NFCDocumentTag {
                     additionalPersonDetails.telephone = dg11.telephone
                     additionalPersonDetails.title = dg11.title
 
-                    passport.additionalPersonDetails = additionalPersonDetails
+                    canCuoc.additionalPersonDetails = additionalPersonDetails
                 }
 
 
                 //Finger prints
                 //Get the pictures
-                if (passportNFC.dg3File != null) {
+                if (canCuocNFC.dg3File != null) {
                     //Get the picture
                     try {
-                        val bitmaps = PassportNfcUtils.retrieveFingerPrintImage(context, passportNFC.dg3File!!)
-                        passport.fingerprints = bitmaps
+                        val bitmaps = CanCuocNfcUtils.retrieveFingerPrintImage(context, canCuocNFC.dg3File!!)
+                        canCuoc.fingerprints = bitmaps
                     } catch (e: Exception) {
                         //Don't do anything
                         e.printStackTrace()
                     }
-
                 }
-
-
-                //Signature
-                //Get the pictures
-                if (passportNFC.dg7File != null) {
-                    //Get the picture
+                if (canCuocNFC.dg7File != null) {
                     try {
-                        val bitmap = PassportNfcUtils.retrieveSignatureImage(context, passportNFC.dg7File!!)
-                        passport.signature = bitmap
+                        val bitmap = CanCuocNfcUtils.retrieveSignatureImage(context, canCuocNFC.dg7File!!)
+                        canCuoc.signature = bitmap
                     } catch (e: Exception) {
                         //Don't do anything
                         e.printStackTrace()
                     }
-
                 }
-
-                //Additional Document Details
-
-                val dg12 = passportNFC.dg12File
+                val dg12 = canCuocNFC.dg12File
                 if (dg12 != null) {
                     val additionalDocumentDetails = AdditionalDocumentDetails()
                     additionalDocumentDetails.dateAndTimeOfPersonalization = dg12.dateAndTimeOfPersonalization
@@ -178,7 +168,7 @@ class NFCDocumentTag {
                     additionalDocumentDetails.personalizationSystemSerialNumber = dg12.personalizationSystemSerialNumber
                     additionalDocumentDetails.taxOrExitRequirements = dg12.taxOrExitRequirements
 
-                    passport.additionalDocumentDetails = additionalDocumentDetails
+                    canCuoc.additionalDocumentDetails = additionalDocumentDetails
                 }
 
                 //TODO EAC
@@ -192,38 +182,43 @@ class NFCDocumentTag {
                 }
             }
 
-            PassportDTO(passport, cardServiceException)
+            CanCuocDTO(canCuoc, cardServiceException)
         }
                 .doOnSubscribe{
-            passportCallback.onPassportReadStart()
+            canCuocCallback.onCanCuocReadStart()
         }
-        .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({ passportDTO ->
-            if(passportDTO.cardServiceException!=null) {
-                val cardServiceException = passportDTO.cardServiceException
-                if (cardServiceException is AccessDeniedException) {
-                    passportCallback.onAccessDeniedException(cardServiceException)
-                } else if (cardServiceException is BACDeniedException) {
-                    passportCallback.onBACDeniedException(cardServiceException)
-                } else if (cardServiceException is PACEException) {
-                    passportCallback.onPACEException(cardServiceException)
-                } else if (cardServiceException is CardServiceException) {
-                    passportCallback.onCardException(cardServiceException)
-                } else {
-                    passportCallback.onGeneralException(cardServiceException)
+        .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe { canCuocDTO ->
+                    if (canCuocDTO.cardServiceException != null) {
+                        when (val cardServiceException = canCuocDTO.cardServiceException) {
+                            is AccessDeniedException -> {
+                                canCuocCallback.onAccessDeniedException(cardServiceException)
+                            }
+                            is BACDeniedException -> {
+                                canCuocCallback.onBACDeniedException(cardServiceException)
+                            }
+                            is PACEException -> {
+                                canCuocCallback.onPACEException(cardServiceException)
+                            }
+                            is CardServiceException -> {
+                                canCuocCallback.onCardException(cardServiceException)
+                            }
+                            else -> {
+                                canCuocCallback.onGeneralException(cardServiceException)
+                            }
+                        }
+                    } else {
+                        canCuocCallback.onCanCuocRead(canCuocDTO.canCuoc)
+                    }
+                    canCuocCallback.onCanCuocReadFinish()
                 }
-            } else {
-                passportCallback.onPassportRead(passportDTO.passport)
-            }
-            passportCallback.onPassportReadFinish()
-        })
     }
 
-    data class PassportDTO(val passport: Passport? = null, val cardServiceException: Exception? = null)
+    data class CanCuocDTO(val canCuoc: CanCuoc? = null, val cardServiceException: Exception? = null)
 
-    interface PassportCallback {
-        fun onPassportReadStart()
-        fun onPassportReadFinish()
-        fun onPassportRead(passport: Passport?)
+    interface CanCuocCallback {
+        fun onCanCuocReadStart()
+        fun onCanCuocReadFinish()
+        fun onCanCuocRead(canCuoc: CanCuoc?)
         fun onAccessDeniedException(exception: AccessDeniedException)
         fun onBACDeniedException(exception: BACDeniedException)
         fun onPACEException(exception: PACEException)

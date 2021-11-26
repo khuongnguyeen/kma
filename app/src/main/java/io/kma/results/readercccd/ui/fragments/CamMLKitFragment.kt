@@ -57,7 +57,6 @@ class CamMLKitFragment : Fragment() {
         return view
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri?) {
     }
 
@@ -160,7 +159,7 @@ class CamMLKitFragment : Fragment() {
                 }
                 .setNegativeButton(
                     android.R.string.cancel
-                ) { dialog, which ->
+                ) { _, _ ->
                     val activity: Activity? = parent!!.activity
                     activity?.finish()
                 }
@@ -183,7 +182,6 @@ class CamMLKitFragment : Fragment() {
         override fun process(frame: Frame) {
             if (!isDecoding) {
                 isDecoding = true
-                //Bitmap bitmap= createBitmap(frame);
                 ocrFrameProcessor?.let {
                     OcrReaderTask(
                         context!!.applicationContext,

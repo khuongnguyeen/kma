@@ -19,7 +19,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="red_700">#00755a</color>
+    <color name="red_700">#0065cb</color>
     <color name="adButtonBorder">#E6F0F0F0</color>
     <color name="blue">#00B1FF</color>
     <color name="black_transparent3">#40000000</color>
@@ -83,7 +83,7 @@
     <color name="orange">#FF9700</color>
 
 
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#0065cb</color>
     <color name="colorPrimaryDark">#D32F2F</color>
     <color name="colorAccent">#D81B60</color>
 

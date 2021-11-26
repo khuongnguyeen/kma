@@ -6,25 +6,20 @@ import android.graphics.Bitmap
 import android.nfc.NfcAdapter
 import android.os.Bundle
 import android.provider.Settings
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import android.widget.Toast
-
-import net.sf.scuba.smartcards.CardServiceException
 
 
 import org.jmrtd.lds.icao.MRZInfo
 
 import io.kma.results.readercccd.R
-import io.kma.results.readercccd.common.IntentData
-import io.kma.results.readercccd.data.Passport
+import io.kma.results.readercccd.data.CanCuoc
 import io.kma.results.readercccd.ui.fragments.NfcFragment
-import io.kma.results.readercccd.ui.fragments.PassportDetailsFragment
-import io.kma.results.readercccd.ui.fragments.PassportPhotoFragment
+import io.kma.results.readercccd.ui.fragments.CanCuocDetailsFragment
+import io.kma.results.readercccd.ui.fragments.CanCuocPhotoFragment
 
 import io.kma.results.readercccd.common.IntentData.KEY_MRZ_INFO
 
-class NfcActivity : androidx.fragment.app.FragmentActivity(), NfcFragment.NfcFragmentListener, PassportDetailsFragment.PassportDetailsFragmentListener, PassportPhotoFragment.PassportPhotoFragmentListener {
+class NfcActivity : androidx.fragment.app.FragmentActivity(), NfcFragment.NfcFragmentListener, CanCuocDetailsFragment.CanCuocDetailsFragmentListener, CanCuocPhotoFragment.CanCuocPhotoFragmentListener {
 
     private var mrzInfo: MRZInfo? = null
 
@@ -53,7 +48,6 @@ class NfcActivity : androidx.fragment.app.FragmentActivity(), NfcFragment.NfcFra
                 Intent(this, this.javaClass)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0)
 
-
         if (null == savedInstanceState) {
             supportFragmentManager.beginTransaction()
                     .replace(R.id.container, NfcFragment.newInstance(mrzInfo!!), TAG_NFC)
@@ -63,36 +57,26 @@ class NfcActivity : androidx.fragment.app.FragmentActivity(), NfcFragment.NfcFra
 
     public override fun onResume() {
         super.onResume()
-
     }
 
     public override fun onPause() {
         super.onPause()
-
     }
 
     public override fun onNewIntent(intent: Intent) {
         if (NfcAdapter.ACTION_TAG_DISCOVERED == intent.action || NfcAdapter.ACTION_TECH_DISCOVERED == intent.action) {
-            // drop NFC events
             handleIntent(intent)
         }else{
             super.onNewIntent(intent)
         }
     }
 
-    protected fun handleIntent(intent: Intent) {
+    private fun handleIntent(intent: Intent) {
         val fragmentByTag = supportFragmentManager.findFragmentByTag(TAG_NFC)
         if (fragmentByTag is NfcFragment) {
             fragmentByTag.handleNfcTag(intent)
         }
     }
-
-
-    /////////////////////////////////////////////////////
-    //
-    //  NFC Fragment events
-    //
-    /////////////////////////////////////////////////////
 
     override fun onEnableNfc() {
 
@@ -110,13 +94,11 @@ class NfcActivity : androidx.fragment.app.FragmentActivity(), NfcFragment.NfcFra
         nfcAdapter.disableForegroundDispatch(this)
     }
 
-    override fun onPassportRead(passport: Passport?) {
-        showFragmentDetails(passport!!)
+    override fun onPassportRead(canCuoc: CanCuoc?) {
+        showFragmentDetails(canCuoc!!)
     }
 
     override fun onCardException(cardException: Exception?) {
-        //Toast.makeText(this, cardException.toString(), Toast.LENGTH_SHORT).show();
-        //onBackPressed();
     }
 
     private fun showWirelessSettings() {
@@ -126,16 +108,16 @@ class NfcActivity : androidx.fragment.app.FragmentActivity(), NfcFragment.NfcFra
     }
 
 
-    private fun showFragmentDetails(passport: Passport) {
+    private fun showFragmentDetails(canCuoc: CanCuoc) {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.container, PassportDetailsFragment.newInstance(passport))
+                .replace(R.id.container, CanCuocDetailsFragment.newInstance(canCuoc))
                 .addToBackStack(TAG_PASSPORT_DETAILS)
                 .commit()
     }
 
     private fun showFragmentPhoto(bitmap: Bitmap) {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.container, PassportPhotoFragment.newInstance(bitmap))
+                .replace(R.id.container, CanCuocPhotoFragment.newInstance(bitmap))
                 .addToBackStack(TAG_PASSPORT_PICTURE)
                 .commit()
     }
@@ -148,7 +130,6 @@ class NfcActivity : androidx.fragment.app.FragmentActivity(), NfcFragment.NfcFra
     companion object {
 
         private val TAG = NfcActivity::class.java.simpleName
-
 
         private val TAG_NFC = "TAG_NFC"
         private val TAG_PASSPORT_DETAILS = "TAG_PASSPORT_DETAILS"

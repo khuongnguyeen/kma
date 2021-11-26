@@ -13,10 +13,10 @@ val App.settings
 val barcodeParser
     get() = BarcodeParser
 
-val AppCompatActivity.barcodeImageScanner
+val barcodeImageScanner
     get() = BarcodeImageScanner
 
-val AppCompatActivity.barcodeImageGenerator
+val barcodeImageGenerator
     get() = BarcodeImageGenerator
 
 val AppCompatActivity.barcodeDatabase
@@ -26,14 +26,14 @@ val AppCompatActivity.settings
     get() = Settings.getInstance(this)
 
 
-val AppCompatActivity.permissionsHelper
+val permissionsHelper
     get() = PermissionsHelper
 
-val AppCompatActivity.rotationHelper
+val rotationHelper
     get() = RotationHelper
 
 
-val Fragment.scannerCameraHelper
+val scannerCameraHelper
     get() = ScannerCameraHelper
 
 val Fragment.barcodeParser

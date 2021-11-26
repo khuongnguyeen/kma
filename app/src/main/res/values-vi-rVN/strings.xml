@@ -85,7 +85,7 @@
     <string name="label_additional_document_information_tax_or_exit_requirements">Các yêu cầu về thuế hoặc xuất cảnh</string>
 
 
-    <string name="label_document_signing_certificate">Chứng chỉ số</string>
+    <string name="label_document_signing_certificate">Chứng thư số</string>
     <string name="label_country_signing_certificate">Quốc gia ký chứng chỉ</string>
     <string name="label_certificate_serial_number">Số seri</string>
     <string name="label_certificate_public_key_algorithm">Khóa công khai</string>
@@ -312,8 +312,8 @@
     <!--    mina-->
     <string name="to_read">Để đọc Thẻ Căn cước công dân của bạn, hãy làm theo các bước tiếp theo:</string>
     <string name="choose_mrz">Chọn phương thức nhập MRZ:</string>
-    <string name="welcome_to_reader">Chào mừng bạn đến với ứng dụng \n Đọc thẻ căn cước công dân</string>
-    <string name="experience_the_power">Ứng dụng đọc thông tin thẻ căn cước hàng đầu Việt Nam</string>
+    <string name="welcome_to_reader">"Chào mừng bạn đến với ứng dụng \n Đọc thẻ căn cước công dân"</string>
+    <string name="experience_the_power"></string>
 
     <!--Create barcode fragment-->
     <string name="fragment_create_barcode_title">Create</string>
@@ -506,4 +506,15 @@
     <string name="activity_choose_theme_system">Same as system</string>
     <string name="activity_choose_theme_light">Light</string>
     <string name="activity_choose_theme_dark">Dark</string>
+
+
+    <string name="manual_input">Nhập thủ công</string>
+    <string name="personal_number">Mã số cá nhân:</string>
+    <string name="e_g_098007297">ví dụ. 098007297</string>
+    <string name="birthdate">Ngày sinh:</string>
+    <string name="e_g_980711">ví dụ. 980711</string>
+    <string name="expiration_date">Ngày hết hạn:</string>
+    <string name="e_g_230711">ví dụ. 230711</string>
+    <string name="confirm">Xác nhận</string>
+
 </resources>

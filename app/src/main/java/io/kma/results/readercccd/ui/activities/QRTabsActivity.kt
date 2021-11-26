@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import io.kma.results.readercccd.R
 import io.kma.results.readercccd.ui.fragments.ScanBarcodeFromCameraFragment
 
-class BottomTabsActivity : BaseActivity() {
+class QRTabsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

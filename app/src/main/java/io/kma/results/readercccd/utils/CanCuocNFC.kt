@@ -35,7 +35,6 @@ import java.security.spec.MGF1ParameterSpec
 import java.security.spec.PSSParameterSpec
 import java.util.ArrayList
 import java.util.Arrays
-import java.util.Collections
 import java.util.Random
 import java.util.TreeMap
 import java.util.TreeSet
@@ -73,31 +72,12 @@ import org.jmrtd.protocol.EACTAResult
 import org.jmrtd.protocol.PACEResult
 
 
-class PassportNFC @Throws(GeneralSecurityException::class)
+class CanCuocNFC @Throws(GeneralSecurityException::class)
 private constructor() {
 
-    /** The hash function for DG hashes.  */
     private var digest: MessageDigest? = null
-
-    /**
-     * Gets the supported features (such as: BAC, AA, EAC) as
-     * discovered during initialization of this document.
-     *
-     * @return the supported features
-     *
-     * @since 0.4.9
-     */
-    /* The feature status has been created in constructor. */ val features: FeatureStatus
-    /**
-     * Gets the verification status thus far.
-     *
-     * @return the verification status
-     *
-     * @since 0.4.9
-     */
+    val features: FeatureStatus
     val verificationStatus: VerificationStatus
-
-    /* We use a cipher to help implement Active Authentication RSA with ISO9796-2 message recovery. */
     @Transient
     private var rsaAASignature: Signature? = null
     @Transient
@@ -108,40 +88,14 @@ private constructor() {
     private var ecdsaAASignature: Signature? = null
     @Transient
     private var ecdsaAADigest: MessageDigest? = null
-
-    /**
-     * Gets the CSCA, CVCA trust store.
-     *
-     * @return the trust store in use
-     */
     var trustManager: MRTDTrustStore?=null
 
-    /**
-     * Gets the document signing private key, or null if not present.
-     *
-     * @return a private key or null
-     */
-    /**
-     * Sets the document signing private key.
-     *
-     * @param docSigningPrivateKey a private key
-     */
     var docSigningPrivateKey: PrivateKey? = null
         set(docSigningPrivateKey) {
             field = docSigningPrivateKey
             updateCOMSODFile(null)
         }
 
-    /**
-     * Gets the CVCA certificate.
-     *
-     * @return a CV certificate or null
-     */
-    /**
-     * Sets the CVCA certificate.
-     *
-     * @param cert the CV certificate
-     */
     var cvCertificate: CardVerifiableCertificate? = null
         set(cert) {
             field = cert
@@ -154,28 +108,7 @@ private constructor() {
 
         }
 
-    /**
-     * Gets the private key for EAC, or null if not present.
-     *
-     * @return a private key or null
-     */
-    /**
-     * Sets the private key for EAC.
-     *
-     * @param eacPrivateKey a private key
-     */
     var eacPrivateKey: PrivateKey? = null
-
-    /**
-     * Gets the private key for AA, or null if not present.
-     *
-     * @return a private key or null
-     */
-    /**
-     * Sets the private key for AA.
-     *
-     * @param aaPrivateKey a private key
-     */
     var aaPrivateKey: PrivateKey? = null
 
     private var service: PassportService?=null
@@ -215,26 +148,13 @@ private constructor() {
 
         this.random = SecureRandom()
 
-        rsaAADigest = MessageDigest.getInstance("SHA1") /* NOTE: for output length measurement only. -- MO */
+        rsaAADigest = MessageDigest.getInstance("SHA1")
         rsaAASignature = Signature.getInstance("SHA1WithRSA/ISO9796-2", BC_PROVIDER)
         rsaAACipher = Cipher.getInstance("RSA/NONE/NoPadding")
-
-        /* NOTE: These will be updated in doAA after caller has read ActiveAuthenticationSecurityInfo. */
         ecdsaAASignature = Signature.getInstance("SHA256withECDSA", BC_PROVIDER)
-        ecdsaAADigest = MessageDigest.getInstance("SHA-256") /* NOTE: for output length measurement only. -- MO */
+        ecdsaAADigest = MessageDigest.getInstance("SHA-256")
     }
 
-
-    /**
-     * Creates a document by reading it from a service.
-     *
-     * @param ps the service to read from
-     * @param trustManager the trust manager (CSCA, CVCA)
-     * @param mrzInfo the BAC entries
-     *
-     * @throws CardServiceException on error
-     * @throws GeneralSecurityException if certain security primitives are not supported
-     */
     @Throws(CardServiceException::class, GeneralSecurityException::class)
     constructor(ps: PassportService?, trustManager: MRTDTrustStore, mrzInfo: MRZInfo) : this() {
         if (ps == null) {
@@ -248,8 +168,6 @@ private constructor() {
         var paceResult: PACEResult? = null
         try {
             (service as PassportService).open()
-
-            /* Find out whether this MRTD supports SAC. */
             try {
                 Log.i(TAG, "Inspecting card access file")
                 val cardAccessFile = CardAccessFile(ps.getInputStream(PassportService.EF_CARD_ACCESS))
@@ -260,7 +178,6 @@ private constructor() {
                     }
                 }
             } catch (e: Exception) {
-                /* NOTE: No card access file, continue to test for BAC. */
                 Log.i(TAG, "DEBUG: failed to get card access file: " + e.message)
                 e.printStackTrace()
             }
@@ -285,10 +202,7 @@ private constructor() {
             e.printStackTrace()
             throw CardServiceException("Cannot open document. " + e.message)
         }
-
-        /* Find out whether this MRTD supports BAC. */
         try {
-            /* Attempt to read EF.COM before BAC. */
             COMFile((service as PassportService).getInputStream(PassportService.EF_COM))
 
             if (isSACSucceeded) {
@@ -305,8 +219,6 @@ private constructor() {
             features.setBAC(FeatureStatus.Verdict.PRESENT)
             verificationStatus.setBAC(VerificationStatus.Verdict.NOT_CHECKED, "BAC document", EMPTY_TRIED_BAC_ENTRY_LIST)
         }
-
-        /* If we have to do BAC, try to do BAC. */
         val hasBAC = features.hasBAC() == FeatureStatus.Verdict.PRESENT
 
         if (hasBAC && !(hasSAC && isSACSucceeded)) {
@@ -319,12 +231,7 @@ private constructor() {
             } catch (e: Exception) {
                 verificationStatus.setBAC(VerificationStatus.Verdict.FAILED, "BAC failed", triedBACEntries)
             }
-
         }
-
-
-        /* Pre-read these files that are always present. */
-
         val dgNumbersAlreadyRead = TreeSet<Int>()
 
         try {
@@ -349,17 +256,15 @@ private constructor() {
             e.printStackTrace()
         }
 
-        /* Get the list of DGs from EF.SOd, we don't trust EF.COM. */
         val dgNumbers = ArrayList<Int>()
         if (sodFile != null) {
             dgNumbers.addAll(sodFile!!.dataGroupHashes.keys)
         } else if (comFile != null) {
-            /* Get the list from EF.COM since we failed to parse EF.SOd. */
             Log.w(TAG, "Failed to get DG list from EF.SOd. Getting DG list from EF.COM.")
             val tagList = comFile!!.tagList
             dgNumbers.addAll(toDataGroupList(tagList)!!)
         }
-        Collections.sort(dgNumbers) /* NOTE: need to sort it, since we get keys as a set. */
+        dgNumbers.sort()
 
         Log.i(TAG, "Found DGs: $dgNumbers")
 
@@ -369,7 +274,6 @@ private constructor() {
         }
 
         if (sodFile != null) {
-            /* Initial hash results: we know the stored hashes, but not the computed hashes yet. */
             val storedHashes = sodFile!!.dataGroupHashes
             for (dgNumber in dgNumbers) {
                 val storedHash = storedHashes[dgNumber]
@@ -386,8 +290,6 @@ private constructor() {
             }
         }
         verificationStatus.setHT(VerificationStatus.Verdict.UNKNOWN, verificationStatus.htReason, hashResults)
-
-        /* Check EAC support by DG14 presence. */
         if (dgNumbers.contains(14)) {
             features.setEAC(FeatureStatus.Verdict.PRESENT)
             features.setCA(FeatureStatus.Verdict.PRESENT)
@@ -420,8 +322,6 @@ private constructor() {
 
             dgNumbersAlreadyRead.add(14)
         }
-
-        /* Check AA support by DG15 presence. */
         if (dgNumbers.contains(15)) {
             features.setAA(FeatureStatus.Verdict.PRESENT)
         } else {
@@ -440,7 +340,6 @@ private constructor() {
             }
 
         } else {
-            /* Feature status says: no AA, so verification status should say: no AA. */
             verificationStatus.setAA(VerificationStatus.Verdict.NOT_PRESENT, "AA is not supported")
         }
 
@@ -481,62 +380,26 @@ private constructor() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
-
-    /**
-     * Sets the document signing certificate.
-     *
-     * @param docSigningCertificate a certificate
-     */
     fun setDocSigningCertificate(docSigningCertificate: X509Certificate) {
         updateCOMSODFile(docSigningCertificate)
     }
 
-    /**
-     * Sets the public key for EAC.
-     *
-     * @param eacPublicKey a public key
-     */
     fun setEACPublicKey(eacPublicKey: PublicKey) {
         val chipAuthenticationPublicKeyInfo = ChipAuthenticationPublicKeyInfo(eacPublicKey)
         val dg14File = DG14File(Arrays.asList(*arrayOf<SecurityInfo>(chipAuthenticationPublicKeyInfo)))
         putFile(PassportService.EF_DG14, dg14File.encoded)
     }
 
-    /**
-     * Sets the public key for AA.
-     *
-     * @param aaPublicKey a public key
-     */
     fun setAAPublicKey(aaPublicKey: PublicKey) {
         val dg15file = DG15File(aaPublicKey)
         putFile(PassportService.EF_DG15, dg15file.encoded)
     }
 
-    /**
-     * Verifies the document using the security related mechanisms.
-     * Convenience method.
-     *
-     * @return the security status
-     */
     fun verifySecurity(): VerificationStatus {
-        /* NOTE: Since 0.4.9 verifyAA and verifyEAC were removed. AA is always checked as part of the prelude.
-         * (EDIT: For debugging it's back here again, see below...)
-         */
-        /* NOTE: We could also move verifyDS and verifyCS to prelude. */
-        /* NOTE: COM SOd consistency check ("Jeroen van Beek sanity check") is implicit now, we work from SOd, ignoring COM. */
-
-        /* Verify whether the Document Signing Certificate is signed by a Trust Anchor in our CSCA store. */
         verifyCS()
-
-        /* Verify whether hashes in EF.SOd signed with document signer certificate. */
         verifyDS()
-
-        /* Verify hashes. */
         verifyHT()
-
-        /* DEBUG: apparently it matters where we do AA, in prelude or in the end?!?! -- MO */
         if (service != null && dg15File != null) {
             verifyAA()
         }
@@ -544,19 +407,11 @@ private constructor() {
         return verificationStatus
     }
 
-    /**
-     * Inserts a file into this document, and updates EF_COM and EF_SOd accordingly.
-     *
-     * @param fid the FID of the new file
-     * @param bytes the contents of the new file
-     */
     private fun putFile(fid: Short, bytes: ByteArray?) {
         if (bytes == null) {
             return
         }
         try {
-            //lds.add(fid, new ByteArrayInputStream(bytes), bytes.length);
-            // FIXME: is this necessary?
             if (fid != PassportService.EF_COM && fid != PassportService.EF_SOD && fid != PassportService.EF_CVCA) {
                 updateCOMSODFile(null)
             }
@@ -567,11 +422,6 @@ private constructor() {
         verificationStatus.setAll(VerificationStatus.Verdict.UNKNOWN, "Unknown") // FIXME: why all?
     }
 
-    /**
-     * Updates EF_COM and EF_SOd using a new document signing certificate.
-     *
-     * @param newCertificate a certificate
-     */
     private fun updateCOMSODFile(newCertificate: X509Certificate?) {
         try {
             val digestAlg = sodFile!!.digestAlgorithm
@@ -603,12 +453,8 @@ private constructor() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
-    ///////////////////////////////////
-
-    /** Check active authentication.  */
     private fun verifyAA() {
         if (dg15File == null || service == null) {
             verificationStatus.setAA(VerificationStatus.Verdict.FAILED, "AA failed")
@@ -622,8 +468,6 @@ private constructor() {
             var digestAlgorithm = "SHA1"
             var signatureAlgorithm = "SHA1WithRSA/ISO9796-2"
             if ("EC" == pubKeyAlgorithm || "ECDSA" == pubKeyAlgorithm) {
-
-                //  List activeAuthenticationInfos = dg14File.getActiveAuthenticationInfos();
                 val activeAuthenticationInfoList = ArrayList<ActiveAuthenticationInfo>()
                 val securityInfos = dg14File!!.securityInfos
                 for (securityInfo in securityInfos) {
@@ -631,8 +475,6 @@ private constructor() {
                         activeAuthenticationInfoList.add(securityInfo)
                     }
                 }
-
-
                 val activeAuthenticationInfoCount = activeAuthenticationInfoList.size
                 if (activeAuthenticationInfoCount < 1) {
                     verificationStatus.setAA(VerificationStatus.Verdict.FAILED, "Found no active authentication info in EF.DG14")
@@ -673,7 +515,6 @@ private constructor() {
         try {
             val pubKeyAlgorithm = publicKey.algorithm
             if ("RSA" == pubKeyAlgorithm) {
-                /* FIXME: check that digestAlgorithm = "SHA1" in this case, check (and re-initialize) rsaAASignature (and rsaAACipher). */
                 Log.w(TAG, "Unexpected algorithms for RSA AA: "
                         + "digest algorithm = " + (digestAlgorithm ?: "null")
                         + ", signature algorithm = " + (signatureAlgorithm ?: "null"))
@@ -736,14 +577,8 @@ private constructor() {
         } catch (iae: GeneralSecurityException) {
             throw CardServiceException(iae.toString())
         }
-
     }
 
-    /**
-     * Checks the security object's signature.
-     *
-     * TODO: Check the cert stores (notably PKD) to fetch document signer certificate (if not embedded in SOd) and check its validity before checking the signature.
-     */
     private fun verifyDS() {
         try {
             verificationStatus.setDS(VerificationStatus.Verdict.UNKNOWN, "Unknown")
@@ -752,9 +587,6 @@ private constructor() {
             val docSigningCert = sodFile!!.docSigningCertificate
             if (docSigningCert == null) {
                 Log.w(TAG, "Could not get document signer certificate from EF.SOd")
-                // FIXME: We search for it in cert stores. See note at verifyCS.
-                // X500Principal issuer = sod.getIssuerX500Principal();
-                // BigInteger serialNumber = sod.getSerialNumber();
             }
             if (checkDocSignature(docSigningCert)) {
                 verificationStatus.setDS(VerificationStatus.Verdict.SUCCEEDED, "Signature checked")
@@ -772,9 +604,6 @@ private constructor() {
 
     }
 
-    /**
-     * Checks the certificate chain.
-     */
     private fun verifyCS() {
         try {
 
@@ -784,8 +613,6 @@ private constructor() {
                 verificationStatus.setCS(VerificationStatus.Verdict.FAILED, "Unable to build certificate chain", chain)
                 return
             }
-
-            /* Get doc signing certificate and issuer info. */
             var docSigningCertificate: X509Certificate? = null
             var sodIssuer: X500Principal? = null
             var sodSerialNumber: BigInteger? = null
@@ -795,7 +622,6 @@ private constructor() {
                 docSigningCertificate = sodFile!!.docSigningCertificate
             } catch (e: Exception) {
                 Log.w(TAG, "Error getting document signing certificate: " + e.message)
-                // FIXME: search for it in cert stores?
             }
 
             if (docSigningCertificate != null) {
@@ -804,7 +630,6 @@ private constructor() {
                 Log.w(TAG, "Error getting document signing certificate from EF.SOd")
             }
 
-            /* Get trust anchors. */
             val cscaStores = trustManager?.cscaStores
             if (cscaStores == null || cscaStores.size <= 0) {
                 Log.w(TAG, "No CSCA certificate stores found.")
@@ -827,9 +652,7 @@ private constructor() {
                     Log.w(TAG, "Security object serial number is different from embedded DS certificate serial number!")
                 }
             }
-
-            /* Run PKIX algorithm to build chain to any trust anchor. Add certificates to our chain. */
-            val pkixChain = PassportNfcUtils.getCertificateChain(docSigningCertificate, sodIssuer!!, sodSerialNumber!!, cscaStores!!, cscaTrustAnchors!!)
+            val pkixChain = CanCuocNfcUtils.getCertificateChain(docSigningCertificate, sodIssuer!!, sodSerialNumber!!, cscaStores!!, cscaTrustAnchors!!)
             if (pkixChain == null) {
                 verificationStatus.setCS(VerificationStatus.Verdict.FAILED, "Could not build chain to trust anchor (pkixChain == null)", chain)
                 return
@@ -838,7 +661,7 @@ private constructor() {
             for (certificate in pkixChain) {
                 if (certificate == docSigningCertificate) {
                     continue
-                } /* Ignore DS certificate, which is already in chain. */
+                }
                 chain.add(certificate)
             }
 
@@ -855,14 +678,9 @@ private constructor() {
             e.printStackTrace()
             verificationStatus.setCS(VerificationStatus.Verdict.FAILED, "Signature failed", EMPTY_CERTIFICATE_CHAIN)
         }
-
     }
 
-    /**
-     * Checks hashes in the SOd correspond to hashes we compute.
-     */
     private fun verifyHT() {
-        /* Compare stored hashes to computed hashes. */
         var hashResults: MutableMap<Int, VerificationStatus.HashMatchResult>? = verificationStatus.hashResults
         if (hashResults == null) {
             hashResults = TreeMap<Int, VerificationStatus.HashMatchResult>()
@@ -880,7 +698,6 @@ private constructor() {
         if (verificationStatus.ht == VerificationStatus.Verdict.UNKNOWN) {
             verificationStatus.setHT(VerificationStatus.Verdict.SUCCEEDED, "All hashes match", hashResults)
         } else {
-            /* Update storedHashes and computedHashes. */
             verificationStatus.setHT(verificationStatus.ht!!, verificationStatus.htReason, hashResults)
         }
     }
@@ -893,20 +710,8 @@ private constructor() {
         return verifyHash(dgNumber, hashResults)
     }
 
-    /**
-     * Verifies the hash for the given datagroup.
-     * Note that this will block until all bytes of the datagroup
-     * are loaded.
-     *
-     * @param dgNumber
-     *
-     * @param hashResults the hashtable status to update
-     */
     private fun verifyHash(dgNumber: Int, hashResults: MutableMap<Int, VerificationStatus.HashMatchResult>): VerificationStatus.HashMatchResult? {
         val fid = LDSFileUtil.lookupFIDByTag(LDSFileUtil.lookupTagByDataGroupNumber(dgNumber))
-
-
-        /* Get the stored hash for the DG. */
         var storedHash: ByteArray? = null
         try {
             val storedHashes = sodFile!!.dataGroupHashes
@@ -915,28 +720,16 @@ private constructor() {
             verificationStatus.setHT(VerificationStatus.Verdict.FAILED, "DG$dgNumber failed, could not get stored hash", hashResults)
             return null
         }
-
-        /* Initialize hash. */
         val digestAlgorithm = sodFile!!.digestAlgorithm
         try {
             digest = getDigest(digestAlgorithm)
         } catch (nsae: NoSuchAlgorithmException) {
             verificationStatus.setHT(VerificationStatus.Verdict.FAILED, "Unsupported algorithm \"$digestAlgorithm\"", null)
-            return null // DEBUG -- MO
+            return null
         }
 
-        /* Read the DG. */
         var dgBytes: ByteArray? = null
         try {
-            /*InputStream dgIn = null;
-            int length = lds.getLength(fid);
-            if (length > 0) {
-                dgBytes = new byte[length];
-                dgIn = lds.getInputStream(fid);
-                DataInputStream dgDataIn = new DataInputStream(dgIn);
-                dgDataIn.readFully(dgBytes);
-            }*/
-
             val abstractTaggedLDSFile = getDG(fid.toInt())
             if (abstractTaggedLDSFile != null) {
                 dgBytes = abstractTaggedLDSFile.encoded
@@ -961,8 +754,6 @@ private constructor() {
             verificationStatus.setHT(VerificationStatus.Verdict.FAILED, "DG$dgNumber failed due to exception", hashResults)
             return hashResult
         }
-
-        /* Compute the hash and compare. */
         try {
             val computedHash = digest!!.digest(dgBytes)
             val hashResult = VerificationStatus.HashMatchResult(storedHash!!, computedHash)
@@ -1031,26 +822,8 @@ private constructor() {
                 return null
             }
         }
-
     }
 
-
-    /**
-     * Verifies the signature over the contents of the security object.
-     * Clients can also use the accessors of this class and check the
-     * validity of the signature for themselves.
-     *
-     * See RFC 3369, Cryptographic Message Syntax, August 2002,
-     * Section 5.4 for details.
-     *
-     * @param docSigningCert the certificate to use
-     * (should be X509 certificate)
-     *
-     * @return status of the verification
-     *
-     * @throws GeneralSecurityException if something goes wrong
-     */
-    /* FIXME: move this out of lds package. */
     @Throws(GeneralSecurityException::class)
     private fun checkDocSignature(docSigningCert: Certificate?): Boolean {
         val eContent = sodFile!!.eContent
@@ -1062,11 +835,6 @@ private constructor() {
         } catch (e: Exception) {
             digestEncryptionAlgorithm = null
         }
-
-        /*
-         * For the cases where the signature is simply a digest (haven't seen a passport like this,
-         * thus this is guessing)
-         */
         if (digestEncryptionAlgorithm == null) {
             val digestAlg = sodFile!!.signerInfoDigestAlgorithm
             var digest: MessageDigest? = null
@@ -1080,13 +848,6 @@ private constructor() {
             val digestBytes = digest.digest()
             return Arrays.equals(digestBytes, signature)
         }
-
-
-        /* For RSA_SA_PSS
-         *    1. the default hash is SHA1,
-         *    2. The hash id is not encoded in OID
-         * So it has to be specified "manually".
-         */
         if ("SSAwithRSA/PSS" == digestEncryptionAlgorithm) {
             val digestAlg = sodFile!!.signerInfoDigestAlgorithm
             digestEncryptionAlgorithm = digestAlg.replace("-", "") + "withRSA/PSS"
@@ -1108,11 +869,6 @@ private constructor() {
             val pssParameterSpec = PSSParameterSpec("SHA-256", "MGF1", mgf1ParameterSpec, saltLength, 1)
             sig!!.setParameter(pssParameterSpec)
         }
-        /*try {
-            sig = Signature.getInstance(digestEncryptionAlgorithm);
-        } catch (Exception e) {
-            sig = Signature.getInstance(digestEncryptionAlgorithm, BC_PROVIDER);
-        }*/
         sig!!.initVerify(docSigningCert)
         sig.update(eContent)
         return sig.verify(signature)
@@ -1120,7 +876,6 @@ private constructor() {
 
 
     private fun findSaltRSA_PSS(digestEncryptionAlgorithm: String, docSigningCert: Certificate?, eContent: ByteArray, signature: ByteArray): Int {
-        //Using brute force
         for (i in 0..512) {
             try {
                 var sig: Signature? = null
@@ -1143,11 +898,9 @@ private constructor() {
             }
 
         }
-        return 0//Unable to find it
+        return 0
     }
 
-
-    ////////////////////////////
 
     @Throws(IOException::class, CardServiceException::class, GeneralSecurityException::class)
     private fun doPACE(ps: PassportService, mrzInfo: MRZInfo): PACEResult? {
@@ -1194,8 +947,6 @@ private constructor() {
         if (sodFile == null) {
             throw NullPointerException("sodFile is null")
         }
-
-        //Chip Authentication
         val eaccaResults = ArrayList<EACCAResult>()
 
         var chipAuthenticationInfo: ChipAuthenticationInfo? = null
@@ -1222,7 +973,6 @@ private constructor() {
                 Log.i("EMRTD", "Chip Authentication succeeded")
             } catch (cse: CardServiceException) {
                 cse.printStackTrace()
-                /* NOTE: Failed? Too bad, try next public key. */
             }
 
         }
@@ -1246,7 +996,7 @@ private constructor() {
 
         //EAC
         for (caReference in possibleCVCAReferences) {
-            val eacCredentials = PassportNfcUtils.getEACCredentials(caReference, cvcaKeyStores)
+            val eacCredentials = CanCuocNfcUtils.getEACCredentials(caReference, cvcaKeyStores)
                     ?: continue
 
             val privateKey = eacCredentials.privateKey
@@ -1266,7 +1016,6 @@ private constructor() {
                 }
             } catch (cse: CardServiceException) {
                 cse.printStackTrace()
-                /* NOTE: Failed? Too bad, try next public key. */
                 continue
             }
 
@@ -1294,7 +1043,6 @@ private constructor() {
 
     @Throws(CardServiceException::class, IOException::class)
     private fun getSodFile(ps: PassportService): SODFile {
-        //SOD FILE
         var isSodFile: InputStream? = null
         try {
             isSodFile = ps.getInputStream(PassportService.EF_SOD)
@@ -1309,7 +1057,6 @@ private constructor() {
 
     @Throws(CardServiceException::class, IOException::class)
     private fun getDG1File(ps: PassportService): DG1File {
-        // Basic data
         var isDG1: InputStream? = null
         try {
             isDG1 = ps.getInputStream(PassportService.EF_DG1)
@@ -1324,7 +1071,6 @@ private constructor() {
 
     @Throws(CardServiceException::class, IOException::class)
     private fun getDG2File(ps: PassportService): DG2File {
-        // Basic data
         var isDG2: InputStream? = null
         try {
             isDG2 = ps.getInputStream(PassportService.EF_DG2)
@@ -1339,7 +1085,6 @@ private constructor() {
 
     @Throws(CardServiceException::class, IOException::class)
     private fun getDG3File(ps: PassportService): DG3File {
-        // Basic data
         var isDG3: InputStream? = null
         try {
             isDG3 = ps.getInputStream(PassportService.EF_DG3)
@@ -1477,7 +1222,7 @@ private constructor() {
 
     companion object {
 
-        private val TAG = PassportNFC::class.java.simpleName
+        private val TAG = CanCuocNFC::class.java.simpleName
 
         private val BC_PROVIDER = JMRTDSecurityProvider.spongyCastleProvider
 

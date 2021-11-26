@@ -31,7 +31,7 @@ import java.security.Security
 
 import io.kma.results.readercccd.R
 import io.kma.results.readercccd.common.IntentData
-import io.kma.results.readercccd.data.Passport
+import io.kma.results.readercccd.data.CanCuoc
 import io.kma.results.readercccd.utils.KeyStoreUtils
 import io.kma.results.readercccd.utils.NFCDocumentTag
 import io.reactivex.disposables.CompositeDisposable
@@ -89,18 +89,18 @@ class NfcFragment : androidx.fragment.app.Fragment() {
         }
 
 
-        val subscribe = NFCDocumentTag().handleTag(context!!, tag, mrzInfo!!, mrtdTrustStore, object : NFCDocumentTag.PassportCallback {
+        val subscribe = NFCDocumentTag().handleTag(context!!, tag, mrzInfo!!, mrtdTrustStore, object : NFCDocumentTag.CanCuocCallback {
 
-            override fun onPassportReadStart() {
+            override fun onCanCuocReadStart() {
                 onNFCSReadStart()
             }
 
-            override fun onPassportReadFinish() {
+            override fun onCanCuocReadFinish() {
                 onNFCReadFinish()
             }
 
-            override fun onPassportRead(passport: Passport?) {
-                this@NfcFragment.onPassportRead(passport)
+            override fun onCanCuocRead(canCuoc: CanCuoc?) {
+                this@NfcFragment.onPassportRead(canCuoc)
 
             }
 
@@ -147,7 +147,7 @@ class NfcFragment : androidx.fragment.app.Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val activity = activity
-        if (activity is NfcFragment.NfcFragmentListener) {
+        if (activity is NfcFragmentListener) {
             nfcFragmentListener = activity
         }
     }
@@ -203,10 +203,10 @@ class NfcFragment : androidx.fragment.app.Fragment() {
         }
     }
 
-    protected fun onPassportRead(passport: Passport?) {
+    protected fun onPassportRead(canCuoc: CanCuoc?) {
         mHandler.post {
             if (nfcFragmentListener != null) {
-                nfcFragmentListener!!.onPassportRead(passport)
+                nfcFragmentListener!!.onPassportRead(canCuoc)
             }
         }
     }
@@ -214,7 +214,7 @@ class NfcFragment : androidx.fragment.app.Fragment() {
     interface NfcFragmentListener {
         fun onEnableNfc()
         fun onDisableNfc()
-        fun onPassportRead(passport: Passport?)
+        fun onPassportRead(canCuoc: CanCuoc?)
         fun onCardException(cardException: Exception?)
     }
 

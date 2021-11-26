@@ -504,7 +504,16 @@
         <string name="choose_mrz">Choose MRZ input method:</string>
 
 
-    <string name="welcome_to_reader">Welcome to Reader \n Citizen Identification Card</string>
-    <string name="experience_the_power">The leading application to read information of Vietnamese citizens\' identity cards</string>
+    <string name="welcome_to_reader">"Welcome to Reader \n Citizen Identification Card"</string>
+    <string name="experience_the_power">"The leading application to read information of Vietnamese citizens\' identity cards"</string>
 
-    </resources>
+    <string name="manual_input">Manual input</string>
+    <string name="personal_number">Personal number:</string>
+    <string name="e_g_098007297">e.g. 098007297</string>
+    <string name="birthdate">Birthdate:</string>
+    <string name="e_g_980711">e.g. 980711</string>
+    <string name="expiration_date">Expiration date:</string>
+    <string name="e_g_230711">e.g. 230711</string>
+    <string name="confirm">Confirm</string>
+
+</resources>

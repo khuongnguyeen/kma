@@ -14,22 +14,20 @@ import org.jmrtd.VerificationStatus
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
 
-import javax.security.auth.x500.X500Principal
-
 import io.kma.results.readercccd.R
 import io.kma.results.readercccd.common.IntentData
-import io.kma.results.readercccd.data.Passport
+import io.kma.results.readercccd.data.CanCuoc
 import io.kma.results.readercccd.utils.StringUtils
 import kotlinx.android.synthetic.main.fragment_passport_details.*
 import java.util.*
 
-class PassportDetailsFragment : androidx.fragment.app.Fragment() {
+class CanCuocDetailsFragment : androidx.fragment.app.Fragment() {
 
-    private var passportDetailsFragmentListener: PassportDetailsFragmentListener? = null
+    private var canCuocDetailsFragmentListener: CanCuocDetailsFragmentListener? = null
 
     internal var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
 
-    private var passport: Passport? = null
+    private var canCuoc: CanCuoc? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -48,19 +46,19 @@ class PassportDetailsFragment : androidx.fragment.app.Fragment() {
 
         val arguments = arguments
         if (arguments!!.containsKey(IntentData.KEY_PASSPORT)) {
-            passport = arguments.getParcelable<Passport>(IntentData.KEY_PASSPORT)
+            canCuoc = arguments.getParcelable<CanCuoc>(IntentData.KEY_PASSPORT)
         } else {
             //error
         }
 
 
         iconPhoto!!.setOnClickListener {
-            var bitmap = passport!!.face
+            var bitmap = canCuoc!!.face
             if (bitmap == null) {
-                bitmap = passport!!.portrait
+                bitmap = canCuoc!!.portrait
             }
-            if (passportDetailsFragmentListener != null) {
-                passportDetailsFragmentListener!!.onImageSelected(bitmap)
+            if (canCuocDetailsFragmentListener != null) {
+                canCuocDetailsFragmentListener!!.onImageSelected(bitmap)
             }
         }
     }
@@ -68,23 +66,23 @@ class PassportDetailsFragment : androidx.fragment.app.Fragment() {
     override fun onResume() {
         super.onResume()
 
-        refreshData(passport)
+        refreshData(canCuoc)
     }
 
-    private fun refreshData(passport: Passport?) {
-        if (passport == null) {
+    private fun refreshData(canCuoc: CanCuoc?) {
+        if (canCuoc == null) {
             return
         }
 
-        if (passport.face != null) {
+        if (canCuoc.face != null) {
             //Add teh face
-            iconPhoto!!.setImageBitmap(passport.face)
-        } else if (passport.portrait != null) {
+            iconPhoto!!.setImageBitmap(canCuoc.face)
+        } else if (canCuoc.portrait != null) {
             //If we don't have the face, we try with the portrait
-            iconPhoto!!.setImageBitmap(passport.portrait)
+            iconPhoto!!.setImageBitmap(canCuoc.portrait)
         }
 
-        val personDetails = passport.personDetails
+        val personDetails = canCuoc.personDetails
         if (personDetails != null) {
             val name = personDetails.primaryIdentifier!!.replace("<", " ").trim { it <= ' ' }
             val surname = personDetails.secondaryIdentifier!!.replace("<", " ").trim { it <= ' ' }
@@ -101,7 +99,7 @@ class PassportDetailsFragment : androidx.fragment.app.Fragment() {
             value_nationality!!.text = personDetails.nationality
         }
 
-        val additionalPersonDetails = passport.additionalPersonDetails
+        val additionalPersonDetails = canCuoc.additionalPersonDetails
         if (additionalPersonDetails != null) {
             //This object it's not available in the majority of passports
             card_view_additional_person_information!!.visibility = View.VISIBLE
@@ -150,7 +148,7 @@ class PassportDetailsFragment : androidx.fragment.app.Fragment() {
             card_view_additional_person_information!!.visibility = View.GONE
         }
 
-        val additionalDocumentDetails = passport.additionalDocumentDetails
+        val additionalDocumentDetails = canCuoc.additionalDocumentDetails
         if (additionalDocumentDetails != null) {
             card_view_additional_document_information!!.visibility = View.VISIBLE
 
@@ -188,10 +186,10 @@ class PassportDetailsFragment : androidx.fragment.app.Fragment() {
             card_view_additional_document_information!!.visibility = View.GONE
         }
 
-        displayAuthenticationStatus(passport.verificationStatus, passport.featureStatus!!)
+        displayAuthenticationStatus(canCuoc.verificationStatus, canCuoc.featureStatus!!)
 
 
-        val sodFile = passport.sodFile
+        val sodFile = canCuoc.sodFile
         if (sodFile != null) {
 
             val docSigningCertificate = sodFile.docSigningCertificate
@@ -296,10 +294,6 @@ class PassportDetailsFragment : androidx.fragment.app.Fragment() {
                 resourceIconId = R.drawable.ic_close_circle_outline
                 resourceColorId = android.R.color.darker_gray
             }
-            else -> {
-                resourceIconId = R.drawable.ic_close_circle_outline
-                resourceColorId = android.R.color.darker_gray
-            }
         }
 
         imageView!!.setImageResource(resourceIconId)
@@ -310,18 +304,18 @@ class PassportDetailsFragment : androidx.fragment.app.Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val activity = activity
-        if (activity is PassportDetailsFragment.PassportDetailsFragmentListener) {
-            passportDetailsFragmentListener = activity
+        if (activity is CanCuocDetailsFragmentListener) {
+            canCuocDetailsFragmentListener = activity
         }
     }
 
     override fun onDetach() {
-        passportDetailsFragmentListener = null
+        canCuocDetailsFragmentListener = null
         super.onDetach()
 
     }
 
-    interface PassportDetailsFragmentListener {
+    interface CanCuocDetailsFragmentListener {
         fun onImageSelected(bitmap: Bitmap?)
     }
 
@@ -341,10 +335,10 @@ class PassportDetailsFragment : androidx.fragment.app.Fragment() {
     companion object {
 
 
-        fun newInstance(passport: Passport): PassportDetailsFragment {
-            val myFragment = PassportDetailsFragment()
+        fun newInstance(canCuoc: CanCuoc): CanCuocDetailsFragment {
+            val myFragment = CanCuocDetailsFragment()
             val args = Bundle()
-            args.putParcelable(IntentData.KEY_PASSPORT, passport)
+            args.putParcelable(IntentData.KEY_PASSPORT, canCuoc)
             myFragment.arguments = args
             return myFragment
         }

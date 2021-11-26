@@ -1,9 +1,7 @@
 package io.kma.results.readercccd.ui.activities
 
-import android.Manifest
 import android.app.Dialog
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Button
@@ -55,25 +53,25 @@ class MainActivity:AppCompatActivity() {
             if (edTextPersonalNb.text.toString()==""||edTextBirthdate.text.toString()==""||edTextExpirationDate.text.toString()==""){
                 SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                     .setConfirmButtonBackgroundColor(getColor(R.color.red_700))
-                    .setContentText("Please enter enough information!")
+                    .setContentText("Vui lòng nhập đủ thông tin!")
                     .show()
             }else{
                 if(edTextPersonalNb.text.toString().length <9){
                     SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                         .setConfirmButtonBackgroundColor(getColor(R.color.red_700))
-                        .setContentText("Personal number must be 9 digits!")
+                        .setContentText("Số cá nhân phải có 9 chữ số!")
                         .show()
                 }else{
                     if(edTextBirthdate.text.toString().length <6){
                         SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                             .setConfirmButtonBackgroundColor(getColor(R.color.red_700))
-                            .setContentText("Birthdate must be 6 digits!")
+                            .setContentText("Ngày sinh phải có 6 chữ số!")
                             .show()
                     }else{
                         if(edTextExpirationDate.text.toString().length <6){
                             SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                                 .setConfirmButtonBackgroundColor(getColor(R.color.red_700))
-                                .setContentText("ExpirationDate must be 6 digits!")
+                                .setContentText("Ngày hết hạn phải có 6 chữ số!")
                                 .show()
                         }
                         else{
@@ -83,9 +81,6 @@ class MainActivity:AppCompatActivity() {
                             inputData.personalNumber = edTextPersonalNb.text.toString()
                             SessionData.getInstance()?.inputData = inputData
                             dialog.dismiss()
-//                            val intent = Intent(this, ReadDocActivity::class.java)
-//                            startActivity(intent)
-
                             val mrzInfo = MRZInfo("P", "ESP", "DUMMY", "DUMMY", edTextPersonalNb.text.toString(), "ESP", edTextBirthdate.text.toString(), Gender.MALE, edTextExpirationDate.text.toString(), "DUMMY")
                             val intent = Intent(this, NfcActivity::class.java)
                             intent.putExtra(IntentData.KEY_MRZ_INFO, mrzInfo)
@@ -99,7 +94,7 @@ class MainActivity:AppCompatActivity() {
     }
 
     private fun qrScreen() {
-        val intent = Intent(this, BottomTabsActivity::class.java)
+        val intent = Intent(this, QRTabsActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }

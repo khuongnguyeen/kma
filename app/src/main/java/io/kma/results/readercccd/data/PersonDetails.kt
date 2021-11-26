@@ -5,11 +5,6 @@ import android.os.Parcelable
 
 import net.sf.scuba.data.Gender
 
-import org.jmrtd.lds.icao.MRZInfo
-
-import java.util.ArrayList
-import java.util.Date
-
 class PersonDetails : Parcelable {
 
 
@@ -27,20 +22,20 @@ class PersonDetails : Parcelable {
 
     constructor()
 
-    constructor(`in`: Parcel) {
+    constructor(parcel: Parcel) {
 
 
-        this.documentCode = if (`in`.readInt() == 1) `in`.readString() else null
-        this.issuingState = if (`in`.readInt() == 1) `in`.readString() else null
-        this.primaryIdentifier = if (`in`.readInt() == 1) `in`.readString() else null
-        this.secondaryIdentifier = if (`in`.readInt() == 1) `in`.readString() else null
-        this.nationality = if (`in`.readInt() == 1) `in`.readString() else null
-        this.documentNumber = if (`in`.readInt() == 1) `in`.readString() else null
-        this.dateOfBirth = if (`in`.readInt() == 1) `in`.readString() else null
-        this.dateOfExpiry = if (`in`.readInt() == 1) `in`.readString() else null
-        this.optionalData1 = if (`in`.readInt() == 1) `in`.readString() else null
-        this.optionalData2 = if (`in`.readInt() == 1) `in`.readString() else null
-        this.gender = if (`in`.readInt() == 1) Gender.valueOf(`in`.readString()!!) else Gender.UNKNOWN
+        this.documentCode = if (parcel.readInt() == 1) parcel.readString() else null
+        this.issuingState = if (parcel.readInt() == 1) parcel.readString() else null
+        this.primaryIdentifier = if (parcel.readInt() == 1) parcel.readString() else null
+        this.secondaryIdentifier = if (parcel.readInt() == 1) parcel.readString() else null
+        this.nationality = if (parcel.readInt() == 1) parcel.readString() else null
+        this.documentNumber = if (parcel.readInt() == 1) parcel.readString() else null
+        this.dateOfBirth = if (parcel.readInt() == 1) parcel.readString() else null
+        this.dateOfExpiry = if (parcel.readInt() == 1) parcel.readString() else null
+        this.optionalData1 = if (parcel.readInt() == 1) parcel.readString() else null
+        this.optionalData2 = if (parcel.readInt() == 1) parcel.readString() else null
+        this.gender = if (parcel.readInt() == 1) Gender.valueOf(parcel.readString()!!) else Gender.UNKNOWN
     }
 
     override fun describeContents(): Int {

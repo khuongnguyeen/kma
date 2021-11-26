@@ -11,9 +11,9 @@ import io.kma.results.readercccd.R
 import io.kma.results.readercccd.common.IntentData
 import kotlinx.android.synthetic.main.fragment_photo.*
 
-class PassportPhotoFragment : androidx.fragment.app.Fragment() {
+class CanCuocPhotoFragment : androidx.fragment.app.Fragment() {
 
-    private var passportPhotoFragmentListener: PassportPhotoFragmentListener? = null
+    private var canCuocPhotoFragmentListener: CanCuocPhotoFragmentListener? = null
 
     private var bitmap: Bitmap? = null
 
@@ -21,12 +21,7 @@ class PassportPhotoFragment : androidx.fragment.app.Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
-        val inflatedView = inflater.inflate(R.layout.fragment_photo, container, false)
-
-
-
-        return inflatedView
+        return inflater.inflate(R.layout.fragment_photo, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,7 +31,6 @@ class PassportPhotoFragment : androidx.fragment.app.Fragment() {
         if (arguments!!.containsKey(IntentData.KEY_IMAGE)) {
             bitmap = arguments.getParcelable<Bitmap>(IntentData.KEY_IMAGE)
         } else {
-            //error
         }
     }
 
@@ -56,23 +50,23 @@ class PassportPhotoFragment : androidx.fragment.app.Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val activity = activity
-        if (activity is PassportPhotoFragmentListener) {
-            passportPhotoFragmentListener = activity
+        if (activity is CanCuocPhotoFragmentListener) {
+            canCuocPhotoFragmentListener = activity
         }
     }
 
     override fun onDetach() {
-        passportPhotoFragmentListener = null
+        canCuocPhotoFragmentListener = null
         super.onDetach()
 
     }
 
-    interface PassportPhotoFragmentListener
+    interface CanCuocPhotoFragmentListener
 
     companion object {
 
-        fun newInstance(bitmap: Bitmap): PassportPhotoFragment {
-            val myFragment = PassportPhotoFragment()
+        fun newInstance(bitmap: Bitmap): CanCuocPhotoFragment {
+            val myFragment = CanCuocPhotoFragment()
             val args = Bundle()
             args.putParcelable(IntentData.KEY_IMAGE, bitmap)
             myFragment.arguments = args

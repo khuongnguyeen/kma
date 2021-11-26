@@ -26,23 +26,6 @@ object BarcodeParser {
             return Other(text)
         }
 
-        return App.parse(text)
-            ?: Youtube.parse(text)
-            ?: GoogleMaps.parse(text)
-            ?: Url.parse(text)
-            ?: Phone.parse(text)
-            ?: Geo.parse(text)
-            ?: Bookmark.parse(text)
-            ?: Sms.parse(text)
-            ?: Mms.parse(text)
-            ?: Wifi.parse(text)
-            ?: Email.parse(text)
-            ?: Cryptocurrency.parse(text)
-            ?: VEvent.parse(text)
-            ?: MeCard.parse(text)
-            ?: VCard.parse(text)
-            ?: OtpAuth.parse(text)
-            ?: NZCovidTracer.parse(text)
-            ?: Other(text)
+        return Other(text)
     }
 }

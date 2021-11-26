@@ -5,7 +5,6 @@ import android.os.Parcel
 import android.os.Parcelable
 
 import java.util.ArrayList
-import java.util.Date
 
 class AdditionalDocumentDetails : Parcelable {
 
@@ -27,29 +26,29 @@ class AdditionalDocumentDetails : Parcelable {
         tagPresenceList = ArrayList()
     }
 
-    constructor(`in`: Parcel) {
+    constructor(parcel: Parcel) {
 
         namesOfOtherPersons = ArrayList()
         tagPresenceList = ArrayList()
 
-        this.endorsementsAndObservations = if (`in`.readInt() == 1) `in`.readString() else null
-        this.dateAndTimeOfPersonalization = if (`in`.readInt() == 1) `in`.readString() else null
-        this.dateOfIssue = if (`in`.readInt() == 1) `in`.readString() else null
+        this.endorsementsAndObservations = if (parcel.readInt() == 1) parcel.readString() else null
+        this.dateAndTimeOfPersonalization = if (parcel.readInt() == 1) parcel.readString() else null
+        this.dateOfIssue = if (parcel.readInt() == 1) parcel.readString() else null
 
-        this.imageOfFront = if (`in`.readInt() == 1) `in`.readParcelable(Bitmap::class.java.classLoader) else null
-        this.imageOfRear = if (`in`.readInt() == 1) `in`.readParcelable(Bitmap::class.java.classLoader) else null
-        this.issuingAuthority = if (`in`.readInt() == 1) `in`.readString() else null
+        this.imageOfFront = if (parcel.readInt() == 1) parcel.readParcelable(Bitmap::class.java.classLoader) else null
+        this.imageOfRear = if (parcel.readInt() == 1) parcel.readParcelable(Bitmap::class.java.classLoader) else null
+        this.issuingAuthority = if (parcel.readInt() == 1) parcel.readString() else null
 
-        if (`in`.readInt() == 1) {
-            `in`.readList(namesOfOtherPersons!!, String::class.java.classLoader)
+        if (parcel.readInt() == 1) {
+            parcel.readList(namesOfOtherPersons!!, String::class.java.classLoader)
         }
 
-        this.personalizationSystemSerialNumber = if (`in`.readInt() == 1) `in`.readString() else null
-        this.taxOrExitRequirements = if (`in`.readInt() == 1) `in`.readString() else null
+        this.personalizationSystemSerialNumber = if (parcel.readInt() == 1) parcel.readString() else null
+        this.taxOrExitRequirements = if (parcel.readInt() == 1) parcel.readString() else null
 
-        tag = `in`.readInt()
-        if (`in`.readInt() == 1) {
-            `in`.readList(tagPresenceList!!, Int::class.java.classLoader)
+        tag = parcel.readInt()
+        if (parcel.readInt() == 1) {
+            parcel.readList(tagPresenceList!!, Int::class.java.classLoader)
         }
 
 

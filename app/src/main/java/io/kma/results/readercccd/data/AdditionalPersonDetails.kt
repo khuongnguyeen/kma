@@ -4,7 +4,6 @@ import android.os.Parcel
 import android.os.Parcelable
 
 import java.util.ArrayList
-import java.util.Date
 
 class AdditionalPersonDetails : Parcelable {
 
@@ -32,7 +31,7 @@ class AdditionalPersonDetails : Parcelable {
         tagPresenceList = ArrayList()
     }
 
-    constructor(`in`: Parcel) {
+    constructor(parcel: Parcel) {
 
         otherNames = ArrayList()
         otherValidTDNumbers = ArrayList()
@@ -40,35 +39,35 @@ class AdditionalPersonDetails : Parcelable {
         placeOfBirth = ArrayList()
         tagPresenceList = ArrayList()
 
-        this.custodyInformation = if (`in`.readInt() == 1) `in`.readString() else null
-        this.fullDateOfBirth = if (`in`.readInt() == 1) `in`.readString() else null
-        this.nameOfHolder = if (`in`.readInt() == 1) `in`.readString() else null
-        if (`in`.readInt() == 1) {
-            `in`.readList(otherNames!!, String::class.java.classLoader)
+        this.custodyInformation = if (parcel.readInt() == 1) parcel.readString() else null
+        this.fullDateOfBirth = if (parcel.readInt() == 1) parcel.readString() else null
+        this.nameOfHolder = if (parcel.readInt() == 1) parcel.readString() else null
+        if (parcel.readInt() == 1) {
+            parcel.readList(otherNames!!, String::class.java.classLoader)
         }
-        if (`in`.readInt() == 1) {
-            `in`.readList(otherValidTDNumbers!!, String::class.java.classLoader)
+        if (parcel.readInt() == 1) {
+            parcel.readList(otherValidTDNumbers!!, String::class.java.classLoader)
         }
-        if (`in`.readInt() == 1) {
-            `in`.readList(permanentAddress!!, String::class.java.classLoader)
+        if (parcel.readInt() == 1) {
+            parcel.readList(permanentAddress!!, String::class.java.classLoader)
         }
-        this.personalNumber = if (`in`.readInt() == 1) `in`.readString() else null
-        this.personalSummary = if (`in`.readInt() == 1) `in`.readString() else null
-        if (`in`.readInt() == 1) {
-            `in`.readList(placeOfBirth!!, String::class.java.classLoader)
+        this.personalNumber = if (parcel.readInt() == 1) parcel.readString() else null
+        this.personalSummary = if (parcel.readInt() == 1) parcel.readString() else null
+        if (parcel.readInt() == 1) {
+            parcel.readList(placeOfBirth!!, String::class.java.classLoader)
         }
-        this.profession = if (`in`.readInt() == 1) `in`.readString() else null
-        if (`in`.readInt() == 1) {
-            this.proofOfCitizenship = ByteArray(`in`.readInt())
-            `in`.readByteArray(this.proofOfCitizenship!!)
+        this.profession = if (parcel.readInt() == 1) parcel.readString() else null
+        if (parcel.readInt() == 1) {
+            this.proofOfCitizenship = ByteArray(parcel.readInt())
+            parcel.readByteArray(this.proofOfCitizenship!!)
         }
-        tag = `in`.readInt()
-        if (`in`.readInt() == 1) {
-            `in`.readList(tagPresenceList!!, Int::class.java.classLoader)
+        tag = parcel.readInt()
+        if (parcel.readInt() == 1) {
+            parcel.readList(tagPresenceList!!, Int::class.java.classLoader)
         }
 
-        this.telephone = if (`in`.readInt() == 1) `in`.readString() else null
-        this.title = if (`in`.readInt() == 1) `in`.readString() else null
+        this.telephone = if (parcel.readInt() == 1) parcel.readString() else null
+        this.title = if (parcel.readInt() == 1) parcel.readString() else null
 
 
     }

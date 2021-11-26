@@ -40,12 +40,12 @@ import java.util.Collections
 
 import javax.security.auth.x500.X500Principal
 
-object PassportNfcUtils {
+object CanCuocNfcUtils {
 
-    private val TAG = PassportNfcUtils::class.java.simpleName
+    private val TAG = CanCuocNfcUtils::class.java.simpleName
 
 
-    private val IS_PKIX_REVOCATION_CHECING_ENABLED = false
+    private const val IS_PKIX_REVOCATION_CHECING_ENABLED = false
 
     init {
         Security.addProvider(BouncyCastleProvider())
@@ -133,14 +133,6 @@ object PassportNfcUtils {
         return null
     }
 
-    /**
-     * Searches the key store for a relevant terminal key and associated certificate chain.
-     *
-     * @param caReference
-     * @param cvcaStore should contain a single key with certificate chain
-     * @return
-     * @throws GeneralSecurityException
-     */
     @Throws(GeneralSecurityException::class)
     private fun getEACCredentials(caReference: CVCPrincipal?, cvcaStore: KeyStore): EACCredentials? {
         if (caReference == null) {
@@ -186,15 +178,6 @@ object PassportNfcUtils {
         return null
     }
 
-    /**
-     * Builds a certificate chain to an anchor using the PKIX algorithm.
-     *
-     * @param docSigningCertificate the start certificate
-     * @param sodIssuer the issuer of the start certificate (ignored unless `docSigningCertificate` is `null`)
-     * @param sodSerialNumber the serial number of the start certificate (ignored unless `docSigningCertificate` is `null`)
-     *
-     * @return the certificate chain
-     */
     fun getCertificateChain(docSigningCertificate: X509Certificate?,
                             sodIssuer: X500Principal,
                             sodSerialNumber: BigInteger,
@@ -256,17 +239,5 @@ object PassportNfcUtils {
 
         return chain
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

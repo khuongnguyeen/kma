@@ -106,9 +106,6 @@ class ScanBarcodeFromCameraFragment : Fragment(), ConfirmBarcodeDialogFragment.L
     }
 
     private fun setDarkStatusBar() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return
-        }
 
         if (settings.isDarkTheme) {
             return
@@ -120,9 +117,6 @@ class ScanBarcodeFromCameraFragment : Fragment(), ConfirmBarcodeDialogFragment.L
     }
 
     private fun setLightStatusBar() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return
-        }
 
         if (settings.isDarkTheme) {
             return

@@ -9,9 +9,8 @@ import org.jmrtd.VerificationStatus
 import org.jmrtd.lds.SODFile
 
 import java.util.ArrayList
-import java.util.HashMap
 
-class Passport : Parcelable {
+class CanCuoc : Parcelable {
 
     var sodFile: SODFile? = null
     var face: Bitmap? = null
@@ -24,35 +23,35 @@ class Passport : Parcelable {
     var featureStatus: FeatureStatus? = null
     var verificationStatus: VerificationStatus? = null
 
-    constructor(`in`: Parcel) {
+    constructor(parcel: Parcel) {
 
 
         fingerprints = ArrayList()
-        this.face = if (`in`.readInt() == 1) `in`.readParcelable(Bitmap::class.java.classLoader) else null
-        this.portrait = if (`in`.readInt() == 1) `in`.readParcelable(Bitmap::class.java.classLoader) else null
-        this.personDetails = if (`in`.readInt() == 1) `in`.readParcelable(PersonDetails::class.java.classLoader) else null
-        this.additionalPersonDetails = if (`in`.readInt() == 1) `in`.readParcelable(AdditionalPersonDetails::class.java.classLoader) else null
+        this.face = if (parcel.readInt() == 1) parcel.readParcelable(Bitmap::class.java.classLoader) else null
+        this.portrait = if (parcel.readInt() == 1) parcel.readParcelable(Bitmap::class.java.classLoader) else null
+        this.personDetails = if (parcel.readInt() == 1) parcel.readParcelable(PersonDetails::class.java.classLoader) else null
+        this.additionalPersonDetails = if (parcel.readInt() == 1) parcel.readParcelable(AdditionalPersonDetails::class.java.classLoader) else null
 
-        if (`in`.readInt() == 1) {
-            `in`.readList(fingerprints!!, Bitmap::class.java.classLoader)
+        if (parcel.readInt() == 1) {
+            parcel.readList(fingerprints!!, Bitmap::class.java.classLoader)
         }
 
-        this.signature = if (`in`.readInt() == 1) `in`.readParcelable(Bitmap::class.java.classLoader) else null
-        this.additionalDocumentDetails = if (`in`.readInt() == 1) `in`.readParcelable(AdditionalDocumentDetails::class.java.classLoader) else null
-        if (`in`.readInt() == 1) {
-            sodFile = `in`.readSerializable() as SODFile
+        this.signature = if (parcel.readInt() == 1) parcel.readParcelable(Bitmap::class.java.classLoader) else null
+        this.additionalDocumentDetails = if (parcel.readInt() == 1) parcel.readParcelable(AdditionalDocumentDetails::class.java.classLoader) else null
+        if (parcel.readInt() == 1) {
+            sodFile = parcel.readSerializable() as SODFile
         }
 
-        if (`in`.readInt() == 1) {
-            featureStatus = `in`.readParcelable(FeatureStatus::class.java.classLoader)
+        if (parcel.readInt() == 1) {
+            featureStatus = parcel.readParcelable(FeatureStatus::class.java.classLoader)
         }
 
-        if (`in`.readInt() == 1) {
-            featureStatus = `in`.readParcelable(FeatureStatus::class.java.classLoader)
+        if (parcel.readInt() == 1) {
+            featureStatus = parcel.readParcelable(FeatureStatus::class.java.classLoader)
         }
 
-        if (`in`.readInt() == 1) {
-            verificationStatus = `in`.readParcelable(VerificationStatus::class.java.classLoader)
+        if (parcel.readInt() == 1) {
+            verificationStatus = parcel.readParcelable(VerificationStatus::class.java.classLoader)
         }
 
     }
@@ -123,12 +122,12 @@ class Passport : Parcelable {
     companion object {
 
         @JvmField
-        val CREATOR: Parcelable.Creator<*> = object : Parcelable.Creator<Passport> {
-            override fun createFromParcel(pc: Parcel): Passport {
-                return Passport(pc)
+        val CREATOR: Parcelable.Creator<*> = object : Parcelable.Creator<CanCuoc> {
+            override fun createFromParcel(pc: Parcel): CanCuoc {
+                return CanCuoc(pc)
             }
 
-            override fun newArray(size: Int): Array<Passport?> {
+            override fun newArray(size: Int): Array<CanCuoc?> {
                 return arrayOfNulls(size)
             }
         }
