@@ -1,1 +1,1 @@
-
+NFC,MRZ,QR
