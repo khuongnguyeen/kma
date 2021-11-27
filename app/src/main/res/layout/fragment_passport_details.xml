@@ -26,12 +26,11 @@
             android:id="@+id/card_view_authentication"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
+            app:cardCornerRadius="0dp"
             app:cardElevation="0dp"
             app:contentPadding="4dp"
-            android:layout_marginTop="@dimen/margin_medium_small"
-            android:layout_marginLeft="@dimen/margin_medium"
-            android:layout_marginRight="@dimen/margin_medium"
+            android:paddingStart="@dimen/margin_medium"
+            android:paddingEnd="@dimen/margin_medium"
             android:layout_marginBottom="@dimen/margin_small"
             android:foreground="?android:selectableItemBackground"
             style="@style/CardViewStyle">
@@ -61,6 +60,7 @@
                             android:padding="@dimen/margin_tiny"
                             android:text="@string/label_authentication"
                             android:layout_weight="1"
+                            android:fontFamily="@font/montserrat_bold_1"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
                     </TableRow>
                 </TableLayout>
@@ -72,6 +72,7 @@
                     android:layout_marginLeft="@dimen/margin_small">
 
                     <TextView
+                        android:fontFamily="@font/montserrat_1"
                         android:id="@+id/label_bac"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -106,6 +107,7 @@
                         android:padding="@dimen/margin_tiny"
                         android:gravity="end"
                         android:text="@string/label_authentication_pace"
+                        android:fontFamily="@font/montserrat_1"
                         android:layout_gravity="left"
                         android:layout_marginRight="@dimen/margin_medium"/>
 
@@ -136,6 +138,7 @@
                         android:padding="@dimen/margin_tiny"
                         android:gravity="end"
                         android:text="@string/label_authentication_passive"
+                        android:fontFamily="@font/montserrat_1"
                         android:layout_gravity="left"
                         android:layout_marginRight="@dimen/margin_medium"/>
 
@@ -164,6 +167,7 @@
                         android:padding="@dimen/margin_tiny"
                         android:gravity="end"
                         android:text="@string/label_authentication_active"
+                        android:fontFamily="@font/montserrat_1"
                         android:layout_gravity="left"
                         android:layout_marginRight="@dimen/margin_medium"/>
 
@@ -191,6 +195,7 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_tiny"
                         android:gravity="end"
+                        android:fontFamily="@font/montserrat_1"
                         android:text="@string/label_authentication_document_signing"
                         android:layout_gravity="left"
                         android:layout_marginRight="@dimen/margin_medium"/>
@@ -221,6 +226,7 @@
                         android:padding="@dimen/margin_tiny"
                         android:gravity="end"
                         android:text="@string/label_authentication_country_signing"
+                        android:fontFamily="@font/montserrat_1"
                         android:layout_gravity="left"
                         android:layout_marginRight="@dimen/margin_medium"/>
 
@@ -250,6 +256,7 @@
                         android:padding="@dimen/margin_tiny"
                         android:gravity="end"
                         android:text="@string/label_authentication_chip"
+                        android:fontFamily="@font/montserrat_1"
                         android:layout_gravity="left"
                         android:layout_marginRight="@dimen/margin_medium"/>
 
@@ -278,6 +285,7 @@
                         android:padding="@dimen/margin_tiny"
                         android:gravity="end"
                         android:text="@string/label_authentication_eac"
+                        android:fontFamily="@font/montserrat_1"
                         android:layout_gravity="left"
                         android:layout_marginRight="@dimen/margin_medium"/>
 
@@ -304,12 +312,12 @@
             android:id="@+id/card_view_person"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
+            app:cardCornerRadius="0dp"
             app:cardElevation="0dp"
             app:contentPadding="4dp"
             android:layout_marginTop="@dimen/margin_tiny"
-            android:layout_marginLeft="@dimen/margin_medium"
-            android:layout_marginRight="@dimen/margin_medium"
+            android:paddingStart="@dimen/margin_medium"
+            android:paddingEnd="@dimen/margin_medium"
             android:layout_marginBottom="@dimen/margin_small"
             android:foreground="?android:selectableItemBackground"
             style="@style/CardViewStyle"
@@ -357,6 +365,7 @@
                                     android:id="@+id/value_name"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/montserrat_bold_1"
                                     android:layout_height="wrap_content"
                                     android:padding="@dimen/margin_tiny"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
@@ -370,6 +379,7 @@
                                     android:id="@+id/value_cid"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/montserrat_medium_1"
                                     android:layout_height="wrap_content"
                                     android:padding="@dimen/margin_tiny"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
@@ -385,6 +395,7 @@
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
                                     android:padding="@dimen/margin_tiny"
+                                    android:fontFamily="@font/montserrat_medium_1"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
                             </TableRow>
 
@@ -396,6 +407,7 @@
                                     android:id="@+id/value_gender"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/montserrat_medium_1"
                                     android:layout_height="wrap_content"
                                     android:padding="@dimen/margin_tiny"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
@@ -411,19 +423,19 @@
             android:id="@+id/card_view_documents"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
+            app:cardCornerRadius="0dp"
             app:cardElevation="0dp"
             app:contentPadding="4dp"
             android:layout_marginTop="@dimen/margin_tiny"
-            android:layout_marginLeft="@dimen/margin_medium"
-            android:layout_marginRight="@dimen/margin_medium"
             android:layout_marginBottom="@dimen/margin_small"
             android:foreground="?android:selectableItemBackground"
             style="@style/CardViewStyle">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingEnd="@dimen/margin_medium">
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline4"
@@ -438,6 +450,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_bold_1"
                     android:text="@string/label_passport"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -451,6 +464,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_document_number"
+                    android:fontFamily="@font/montserrat_1"
                     app:layout_constraintEnd_toStartOf="@+id/guideline4"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/label_personal_documents" />
@@ -462,6 +476,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline4"
@@ -473,6 +488,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_document_expiry"
+                    android:fontFamily="@font/montserrat_1"
                     app:layout_constraintEnd_toStartOf="@+id/guideline4"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/value_passport_number" />
@@ -483,6 +499,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_not_available"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -494,6 +511,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_document_issuing_state"
                     app:layout_constraintEnd_toStartOf="@+id/guideline4"
                     app:layout_constraintStart_toStartOf="parent"
@@ -505,6 +523,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_not_available"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -517,6 +536,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_document_nationality"
+                    android:fontFamily="@font/montserrat_1"
                     app:layout_constraintEnd_toStartOf="@+id/guideline4"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/value_issuing_state" />
@@ -528,6 +548,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline4"
@@ -543,19 +564,21 @@
             android:id="@+id/card_view_additional_person_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
+            app:cardCornerRadius="0dp"
             app:cardElevation="0dp"
             app:contentPadding="4dp"
             android:layout_marginTop="@dimen/margin_tiny"
-            android:layout_marginLeft="@dimen/margin_medium"
-            android:layout_marginRight="@dimen/margin_medium"
+            android:paddingStart="@dimen/margin_medium"
+            android:paddingEnd="@dimen/margin_medium"
             android:layout_marginBottom="@dimen/margin_small"
             android:foreground="?android:selectableItemBackground"
             style="@style/CardViewStyle">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingEnd="@dimen/margin_medium">
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline"
@@ -569,6 +592,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_bold_1"
                     android:text="@string/label_additional_information"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -582,6 +606,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_additional_information_custody"
+                    android:fontFamily="@font/montserrat_1"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/label_additional_person_information" />
@@ -593,6 +618,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -605,6 +631,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_additional_information_dob"
+                    android:fontFamily="@font/montserrat_1"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/value_custody" />
@@ -616,6 +643,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -628,6 +656,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_additional_information_other_names"
+                    android:fontFamily="@font/montserrat_1"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/value_date_of_birth" />
@@ -639,6 +668,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -651,6 +681,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_additional_information_other_valid_td_numbers"
+                    android:fontFamily="@font/montserrat_1"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/value_other_names" />
@@ -661,6 +692,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_not_available"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -673,6 +705,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_additional_information_permanent_address"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
@@ -684,6 +717,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_not_available"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -695,6 +729,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_additional_information_personal_number"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
@@ -706,6 +741,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_not_available"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -717,6 +753,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_additional_information_personal_summary"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
@@ -729,6 +766,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -751,6 +789,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -762,6 +801,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_additional_information_profession"
+                    android:fontFamily="@font/montserrat_1"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/value_place_of_birth" />
@@ -773,6 +813,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -784,6 +825,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_additional_information_telephone"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
@@ -796,6 +838,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -807,6 +850,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_additional_information_title"
+                    android:fontFamily="@font/montserrat_1"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/value_telephone" />
@@ -818,6 +862,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -831,19 +876,19 @@
             android:id="@+id/card_view_additional_document_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
+            app:cardCornerRadius="0dp"
             app:cardElevation="0dp"
             app:contentPadding="4dp"
             android:layout_marginTop="@dimen/margin_tiny"
-            android:layout_marginLeft="@dimen/margin_medium"
-            android:layout_marginRight="@dimen/margin_medium"
             android:layout_marginBottom="@dimen/margin_small"
             android:foreground="?android:selectableItemBackground"
             style="@style/CardViewStyle">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingEnd="@dimen/margin_medium">
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline3"
@@ -859,6 +904,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_bold_1"
                     android:text="@string/label_additional_document_information"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -872,6 +918,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_additional_document_information_endorsements_and_observations"
                     app:layout_constraintEnd_toStartOf="@+id/guideline3"
                     app:layout_constraintStart_toStartOf="parent"
@@ -884,6 +931,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -897,6 +945,7 @@
                     android:layout_weight="1"
                     android:maxLines="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_additional_document_information_date_and_time_of_personalization"
                     app:layout_constraintEnd_toStartOf="@+id/guideline3"
                     app:layout_constraintStart_toStartOf="parent"
@@ -908,6 +957,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_not_available"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -921,6 +971,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_additional_document_information_date_of_issue"
                     app:layout_constraintEnd_toStartOf="@+id/guideline3"
                     app:layout_constraintStart_toStartOf="parent"
@@ -932,6 +983,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_not_available"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -944,6 +996,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_additional_document_information_issuing_authority"
                     app:layout_constraintEnd_toStartOf="@+id/guideline3"
@@ -957,6 +1010,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -968,6 +1022,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_additional_document_information_names_of_other_persons"
                     app:layout_constraintEnd_toStartOf="@+id/guideline3"
                     app:layout_constraintStart_toStartOf="parent"
@@ -980,6 +1035,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -992,6 +1048,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_additional_document_information_personalization_system_serial_number"
                     app:layout_constraintEnd_toStartOf="@+id/guideline3"
                     app:layout_constraintStart_toStartOf="parent"
@@ -1004,6 +1061,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -1015,6 +1073,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_additional_document_information_tax_or_exit_requirements"
                     app:layout_constraintEnd_toStartOf="@+id/guideline3"
                     app:layout_constraintStart_toStartOf="parent"
@@ -1026,6 +1085,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_not_available"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -1041,19 +1101,20 @@
             android:id="@+id/card_view_document_signing_certificate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
+            app:cardCornerRadius="0dp"
             app:cardElevation="0dp"
             app:contentPadding="4dp"
             android:layout_marginTop="@dimen/margin_tiny"
-            android:layout_marginLeft="@dimen/margin_medium"
-            android:layout_marginRight="@dimen/margin_medium"
             android:layout_marginBottom="@dimen/margin_small"
             android:foreground="?android:selectableItemBackground"
             style="@style/CardViewStyle">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingEnd="@dimen/margin_medium">
+
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline2"
                     android:layout_width="wrap_content"
@@ -1068,6 +1129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_bold_1"
                     android:text="@string/label_document_signing_certificate"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -1081,6 +1143,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_certificate_serial_number"
                     app:layout_constraintEnd_toStartOf="@+id/guideline2"
                     app:layout_constraintStart_toStartOf="parent"
@@ -1093,6 +1156,7 @@
                     android:layout_weight="1"
                     android:maxLines="3"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_not_available"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -1106,6 +1170,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_certificate_public_key_algorithm"
                     app:layout_constraintEnd_toStartOf="@+id/guideline2"
                     app:layout_constraintStart_toStartOf="parent"
@@ -1118,6 +1183,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -1130,6 +1196,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_certificate_signature_algorithm"
                     app:layout_constraintEnd_toStartOf="@+id/guideline2"
                     app:layout_constraintStart_toStartOf="parent"
@@ -1142,6 +1209,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -1154,6 +1222,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_certificate_thumbprint"
                     app:layout_constraintEnd_toStartOf="@+id/guideline2"
                     app:layout_constraintStart_toStartOf="parent"
@@ -1166,6 +1235,7 @@
                     android:layout_weight="1"
                     android:maxLines="4"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_not_available"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -1179,6 +1249,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_certificate_issuer"
                     app:layout_constraintEnd_toStartOf="@+id/guideline2"
                     app:layout_constraintStart_toStartOf="parent"
@@ -1190,6 +1261,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:maxLines="6"
+                    android:fontFamily="@font/montserrat_1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -1203,6 +1275,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_certificate_subject"
                     app:layout_constraintEnd_toStartOf="@+id/guideline2"
                     app:layout_constraintStart_toStartOf="parent"
@@ -1214,6 +1287,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:maxLines="6"
+                    android:fontFamily="@font/montserrat_1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -1228,6 +1302,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_certificate_valid_from"
                     app:layout_constraintEnd_toStartOf="@+id/guideline2"
                     app:layout_constraintStart_toStartOf="parent"
@@ -1239,6 +1314,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
+                    android:fontFamily="@font/montserrat_1"
                     android:text="@string/label_not_available"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -1253,6 +1329,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_certificate_valid_to"
+                    android:fontFamily="@font/montserrat_1"
                     app:layout_constraintEnd_toStartOf="@+id/guideline2"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/value_document_signing_certificate_valid_from" />
@@ -1264,24 +1341,13 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_tiny"
                     android:text="@string/label_not_available"
+                    android:fontFamily="@font/montserrat_1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline2"
                     app:layout_constraintTop_toBottomOf="@+id/value_document_signing_certificate_valid_from" />
 
-
-
-
-
-
-
-
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
         </androidx.cardview.widget.CardView>
 
