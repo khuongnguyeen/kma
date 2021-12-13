@@ -6,12 +6,31 @@ import java.io.ByteArrayInputStream
 import java.io.DataInputStream
 import java.io.IOException
 import java.io.InputStream
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.util.*
 
 object ImageUtil {
 
     var JPEG2000_MIME_TYPE = "image/jp2"
     var JPEG2000_ALT_MIME_TYPE = "image/jpeg2000"
     var WSQ_MIME_TYPE = "image/x-wsq"
+
+
+
+
+    @JvmStatic
+    fun date2TimeStamp2(dateStr: String?): String {
+        val dateFormat = SimpleDateFormat("yyMMdd", Locale.ENGLISH)
+        val date: Date = dateFormat.parse(dateStr)
+        val time = date.time
+        val timestamp = Timestamp(time)
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+        return sdf.format(timestamp.time)
+    }
+
+
+
 
     @Throws(IOException::class)
     fun decodeImage(inputStream: InputStream, imageLength: Int, mimeType: String): Bitmap {

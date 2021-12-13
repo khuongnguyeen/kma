@@ -35,7 +35,7 @@ class NFCDocumentTag {
                 ps = PassportService(cs, 256, 224, false, true)
                 ps.open()
 
-                val canCuocNFC = CanCuocNFC(ps, mrtdTrustStore, mrzInfo)
+                val canCuocNFC =  CanCuocNFC(ps, mrtdTrustStore, mrzInfo)
                 val verifySecurity = canCuocNFC.verifySecurity()
                 val features = canCuocNFC.features
                 canCuoc = CanCuoc()

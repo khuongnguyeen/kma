@@ -140,13 +140,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_copy"
         android:layout_width="0dp"
         android:layout_height="@dimen/_50sdp"
         android:background="@drawable/bg_item_main"
+        android:backgroundTint="@color/blue_new"
         android:fontFamily="@font/montserrat_bold_1"
         android:text="Sao chép"
+        android:textColor="@color/white"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_5sdp"
         android:textSize="@dimen/_13sdp"
@@ -162,13 +164,15 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_qr"
         android:layout_width="0dp"
         android:layout_height="@dimen/_50sdp"
         android:background="@drawable/bg_item_main"
         android:fontFamily="@font/montserrat_bold_1"
-        android:text="mã qr"
+        android:backgroundTint="@color/blue_new"
+        android:textColor="@color/white"
+        android:text="Mã QR"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_30sdp"

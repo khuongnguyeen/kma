@@ -2,61 +2,34 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@color/adButtonBorder"
-    android:layout_height="match_parent">
+    android:background="#3BA0FC"
+    android:layout_height="match_parent"
+    android:splitMotionEvents = "false">
+
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/animation_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bg" />
-
-    <io.kma.results.readercccd.common.view.SquareImageView
-        android:id="@+id/squareImageView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_200sdp"
-        android:src="@drawable/logo"
-        app:layout_constraintBottom_toTopOf="@+id/btn_start"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_20sdp"
+        android:layout_gravity="center"
+        android:src="@drawable/vector_smart_object"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
-
-
-
     <TextView
-        android:id="@+id/btn_start"
-        android:layout_width="wrap_content"
-        android:layout_height="56dp"
-        android:text="Loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium_1"
+        android:text="@string/LOADING"
         android:gravity="center"
-        android:textSize="20dp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="@dimen/_60sdp"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/img"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_start"
-        app:layout_constraintStart_toEndOf="@+id/btn_start"
-        app:layout_constraintTop_toTopOf="@+id/btn_start"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/ladongd" />
-
-
-
-
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:textColor="@color/blue_new_2"
+        android:textSize="@dimen/_20sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/animation_view" />
 
 
 

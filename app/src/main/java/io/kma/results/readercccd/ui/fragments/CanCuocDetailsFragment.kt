@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat
 import io.kma.results.readercccd.R
 import io.kma.results.readercccd.common.IntentData
 import io.kma.results.readercccd.data.CanCuoc
+import io.kma.results.readercccd.utils.ImageUtil.date2TimeStamp2
 import io.kma.results.readercccd.utils.StringUtils
 import kotlinx.android.synthetic.main.fragment_passport_details.*
 import java.util.*
@@ -87,14 +88,14 @@ class CanCuocDetailsFragment : androidx.fragment.app.Fragment() {
             val name = personDetails.primaryIdentifier!!.replace("<", " ").trim { it <= ' ' }
             val surname = personDetails.secondaryIdentifier!!.replace("<", " ").trim { it <= ' ' }
             value_name!!.text = getString(R.string.name, name, surname)
-            value_DOB!!.text = personDetails.dateOfBirth
+            value_DOB!!.text = date2TimeStamp2(personDetails.dateOfBirth)
             val a = personDetails.optionalData1?.split(" ")
 
             if (a?.size!! > 0)  value_cid!!.text = a[0]
 
             value_gender!!.text = personDetails.gender!!.name
             value_passport_number!!.text = personDetails.documentNumber
-            value_expiration_date!!.text = personDetails.dateOfExpiry
+            value_expiration_date!!.text = date2TimeStamp2(personDetails.dateOfExpiry)
             value_issuing_state!!.text = personDetails.issuingState
             value_nationality!!.text = personDetails.nationality
         }

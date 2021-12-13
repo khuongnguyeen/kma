@@ -81,7 +81,6 @@ class NfcFragment : androidx.fragment.app.Fragment() {
             mrtdTrustStore.addAsCSCACertStore(certStore)
         }
 
-
         val subscribe = NFCDocumentTag().handleTag(requireContext(), tag, mrzInfo!!, mrtdTrustStore, object : NFCDocumentTag.CanCuocCallback {
 
             override fun onCanCuocReadStart() {

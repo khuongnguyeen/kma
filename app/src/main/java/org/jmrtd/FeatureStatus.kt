@@ -66,12 +66,12 @@ class FeatureStatus : Parcelable {
         return hasCA
     }
 
-    constructor(`in`: Parcel) {
-        this.hasSAC = if(`in`.readInt() == 1){ Verdict.valueOf(`in`.readString()!!) } else { null }
-        this.hasBAC = if(`in`.readInt() == 1){Verdict.valueOf(`in`.readString()!!) } else { null }
-        this.hasAA = if(`in`.readInt() == 1){Verdict.valueOf(`in`.readString()!!) } else { null }
-        this.hasEAC = if(`in`.readInt() == 1){Verdict.valueOf(`in`.readString()!!) } else { null }
-        this.hasCA = if(`in`.readInt() == 1){Verdict.valueOf(`in`.readString()!!) } else { null }
+    constructor(parcel: Parcel) {
+        this.hasSAC = if(parcel.readInt() == 1){ Verdict.valueOf(parcel.readString()!!) } else { null }
+        this.hasBAC = if(parcel.readInt() == 1){Verdict.valueOf(parcel.readString()!!) } else { null }
+        this.hasAA = if(parcel.readInt() == 1){Verdict.valueOf(parcel.readString()!!) } else { null }
+        this.hasEAC = if(parcel.readInt() == 1){Verdict.valueOf(parcel.readString()!!) } else { null }
+        this.hasCA = if(parcel.readInt() == 1){Verdict.valueOf(parcel.readString()!!) } else { null }
     }
 
     override fun describeContents(): Int {

@@ -17,6 +17,7 @@
         android:required="true" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name="androidx.multidex.MultiDexApplication"
         android:allowBackup="true"
@@ -29,7 +30,10 @@
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="ocr" />
 
-        <activity android:name=".ui.activities.QRTabsActivity" />
+        <activity android:name=".ui.activities.QRTabsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
 
         <activity android:name=".ui.activities.ScanBarcodeFromFileActivity" />
         <activity android:name=".ui.activities.BarcodeActivity" />
@@ -44,14 +48,18 @@
         </activity>
 
 
-        <activity android:name=".ui.activities.SplashScreen">
+        <activity android:name=".ui.activities.SplashScreen"
+            android:theme="@style/Theme.ReaderCCCD">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.MainActivity" />
+
+        <activity android:name=".ui.activities.MainActivity"
+            android:theme="@style/BaseAppTheme"
+            />
 
         <meta-data
             android:name="io.sentry.dsn"

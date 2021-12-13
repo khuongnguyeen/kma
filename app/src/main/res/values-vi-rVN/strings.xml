@@ -69,7 +69,7 @@
     <string name="label_authentication_passive">Passive</string>
     <string name="label_authentication_active">Active</string>
     <string name="label_authentication_eac">EAC</string>
-    <string name="label_authentication_document_signing">Ký tài liệu</string>
+    <string name="label_authentication_document_signing">Document Signing</string>
     <string name="label_authentication_country_signing">CSCA</string>
 
 

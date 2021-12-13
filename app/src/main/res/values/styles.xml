@@ -2,8 +2,8 @@
 
     <style name="Theme.ReaderCCCD" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue_new</item>
-        <item name="colorPrimaryVariant">@color/blue_new</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/white</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -12,6 +12,9 @@
 
         <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
 
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:splitMotionEvents">false</item>
+        <item name="android:windowEnableSplitTouch">false</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
@@ -31,11 +34,13 @@
 
 <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/blue_new</item>
-        <item name="colorPrimaryDark">@color/red</item>
+        <item name="colorPrimaryDark">@color/blue_new</item>
         <item name="colorAccent">@color/blue_new</item>
+
+    <item name="colorOnPrimary">@color/white</item>
         <item name="android:colorBackground">@color/color_background</item>
-        <item name="android:textColor">@color/default_text_color</item>
-        <item name="android:textColorSecondary">@color/text_color_secondary</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:navigationBarColor">@color/navigation_bar_color</item>
         <item name="android:actionOverflowButtonStyle">@style/ToolbarMenuButtonStyle</item>

@@ -99,7 +99,6 @@ class ScanBarcodeFromCameraFragment(val activity2: AppCompatActivity) : Fragment
     }
 
     private fun setLightStatusBar() {
-
         requireActivity().window.decorView.apply {
             systemUiVisibility = systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
@@ -107,10 +106,7 @@ class ScanBarcodeFromCameraFragment(val activity2: AppCompatActivity) : Fragment
 
     private fun initScanner() {
         codeScanner = CodeScanner(requireActivity(), scanner_view).apply {
-
             CodeScanner.CAMERA_BACK
-
-
             scanMode = ScanMode.SINGLE
             isAutoFocusEnabled = true
             isTouchFocusEnabled = false
